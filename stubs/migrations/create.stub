@@ -33,11 +33,9 @@ class DummyClass extends Migration
     public function down()
     {
         /*
-        if (Schema::hasTable('DummyTable')) {
-            Schema::table('DummyTable', function (Blueprint $table) {
-                $table->dropForeign(['user_id']);
-            });
-        }
+        Schema::table('DummyTable', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
         */
 
         Schema::dropIfExists('DummyTable');

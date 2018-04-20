@@ -1,0 +1,49 @@
+// Output generated CSS classes
+// Example, where the prefix is 'font-weight' and value is 'semibold': .font-weight-semibold
+// Example, where the prefix is 'color', the value is 'red' and variant is 'dark': .color-red--dark
+// 
+// @param  $map           The map to generate from
+// @param  $class-prefix  The CSS class prefix
+// @param  $property      The property to generate values for
+// @param  $important     Whether to add '!important' rules or not
+@mixin abstract-generator($map, $class-prefix, $property, $important: false) {
+  @each $key, $value in $map {
+    // Value has variants
+    @if type-of($value) == 'map' {
+      @each $variant-key, $variant-value in $value {
+        // Add a non-variant class for the 'base' variant
+        @if $variant-key == 'base' {
+          .#{$class-prefix}-#{$key} {
+            @if $important == true {
+              #{$property}: $variant-value !important;
+            } @else {
+              #{$property}: $variant-value;
+            }
+          }
+        }
+
+        // Add variant classes for all other variants
+        @else {
+          .#{$class-prefix}-#{$key}--#{$variant-key} {
+            @if $important == true {
+              #{$property}: $variant-value !important;
+            } @else {
+              #{$property}: $variant-value;
+            }
+          }
+        }
+      }
+    }
+
+    // Normal value
+    @else {
+      .#{$class-prefix}-#{$key} {
+        @if $important == true {
+          #{$property}: $value !important;
+        } @else {
+          #{$property}: $value;
+        }
+      }
+    }
+  }
+}

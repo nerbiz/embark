@@ -1,0 +1,31 @@
+// Fonts
+$font-family-base:            fontfamily('default');
+$font-family-sans-serif:      fontfamily('sans');
+$font-family-monospace:       fontfamily('mono');
+
+$font-weight-base:            fontweight('normal');
+$font-weight-light:           fontweight('light');
+$font-weight-normal:          fontweight('normal');
+$font-weight-bold:            fontweight('bold');
+
+$line-height-base:            lineheight('default');
+
+// Colors
+$colors:                      $__palette;
+$theme-colors:                palette('theme', '_all');
+
+// Borders
+$border-radius:               borderradius('medium');
+$border-radius-lg:            borderradius('large');
+$border-radius-sm:            borderradius('small');
+
+// Spacing
+$spacer:                      $__spacingAmount;
+$spacers: (
+  0:                          spacing('tiny'),
+  1:                          spacing('small'),
+  2:                          spacing('default'),
+  3:                          spacing('medium'),
+  4:                          spacing('large'),
+  5:                          spacing('huge')
+);

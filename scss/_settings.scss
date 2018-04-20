@@ -1,0 +1,13 @@
+$__settings:              () !default;
+$__settings: map-merge((
+  // Decide if generated classes will use '!important'
+  important: (
+    'background-color':   true,
+    'border-width':       true,
+    'color':              true,
+    'font-family':        true,
+    'font-size':          true,
+    'font-weight':        true,
+    'line-height':        true
+  )
+), $__settings);
