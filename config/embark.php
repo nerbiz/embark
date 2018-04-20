@@ -52,4 +52,21 @@ return [
     'laravel_directory_name' => 'laravel',
     'public_directory_name' => 'public_html',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Files to keep in place, when moving the Laravel directory
+    |--------------------------------------------------------------------------
+    |
+    | Add the file/directory names that need to stay in the main directory.
+    | All other files, except the public directory will be moved to a
+    | separate Laravel directory.
+    |
+    */
+    'exclude_from_laravel_dir' => [
+        '.idea',
+        '.git',
+        '.gitattributes',
+        '.gitignore'
+    ]
+
 ];
