@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'string_pk_length' => env('EMBARK_STRING_PK_LENGTH', 20),
+    'string_pk_length' => 20,
 
     /*
     |--------------------------------------------------------------------------
@@ -24,8 +24,8 @@ return [
     | table changes.
     |
     */
-    'default_on_update' => env('EMBARK_DEFAULT_ON_UPDATE', 'cascade'),
-    'default_on_delete' => env('EMBARK_DEFAULT_ON_DELETE', 'restrict'),
+    'default_on_update' => 'cascade',
+    'default_on_delete' => 'restrict',
 
     /*
     |--------------------------------------------------------------------------
@@ -37,6 +37,6 @@ return [
     |
     */
 
-    'generating_namespace' => env('EMBARK_GENERATED_NAMESPACE', 'Main'),
+    'generating_namespace' => 'Main',
 
 ];
