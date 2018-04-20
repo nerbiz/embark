@@ -1,6 +1,6 @@
 <?php
 
-namespace Nerbiz\Embark;
+namespace Nerbiz\Embark\Migrations;
 
 use Illuminate\Database\Schema\Blueprint;
 

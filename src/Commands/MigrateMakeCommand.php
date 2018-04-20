@@ -4,7 +4,7 @@ namespace Nerbiz\Embark\Commands;
 
 use Illuminate\Database\Console\Migrations\MigrateMakeCommand as BaseMigrateMakeCommand;
 use Illuminate\Support\Composer;
-use Nerbiz\Embark\MigrationCreator;
+use Nerbiz\Embark\Migrations\MigrationCreator;
 
 class MigrateMakeCommand extends BaseMigrateMakeCommand
 {
