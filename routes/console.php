@@ -11,13 +11,14 @@ Artisan::command('embark:restructure', function () {
     if ($restructureBase->isDoneAlready()) {
         $restructureBase->showDoneAlreadyText();
         $restructureBase->showAbortingText();
-        // return;
+        return;
     }
 
     // Show a text before continuing
     $restructureBase->showConfirmationText();
     $confirmed = $restructureBase->askForConfirmation();
 
+    // Show 'aborting' text when the user didn't confirm
     if (! $confirmed) {
         $restructureBase->showAbortingText();
         return;

@@ -4,7 +4,7 @@ namespace Nerbiz\Embark\Restructure;
 
 use Illuminate\Foundation\Console\ClosureCommand;
 
-class RestructureBase
+class RestructureBase implements RestructureInterface
 {
     /**
      * @var ClosureCommand
@@ -108,6 +108,14 @@ class RestructureBase
     {
         $this->confirmed = $this->closureCommand->confirm('Would you like to continue?', false);
         return $this->confirmed;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function restructure()
+    {
+        //
     }
 
     /**
