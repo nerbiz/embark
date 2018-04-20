@@ -1,24 +1,25 @@
 <?php
 
-use Nerbiz\Embark\Commands\RestructureCommand;
+use Nerbiz\Embark\Restructure\RestructureBase;
 
 Artisan::command('embark:restructure', function () {
-    $restructureCommand = app()->make(RestructureCommand::class, [
-        'command' => $this
+    $restructureBase = app()->make(RestructureBase::class, [
+        'closureCommand' => $this
     ]);
 
-    if ($restructureCommand->doneAlready()) {
-        $restructureCommand->notifyDoneAlready();
-        $restructureCommand->showAbortingText();
-        return;
+    // Check if the restructuring has been done already
+    if ($restructureBase->isDoneAlready()) {
+        $restructureBase->showDoneAlreadyText();
+        $restructureBase->showAbortingText();
+        // return;
     }
 
     // Show a text before continuing
-    $restructureCommand->showConfirmationText();
-    $confirmed = $restructureCommand->askForConfirmation();
+    $restructureBase->showConfirmationText();
+    $confirmed = $restructureBase->askForConfirmation();
 
     if (! $confirmed) {
-        $restructureCommand->showAbortingText();
+        $restructureBase->showAbortingText();
         return;
     }
 })->describe('Move Laravel and public files to separate directories');
