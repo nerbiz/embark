@@ -26,10 +26,30 @@ class RestructureCommand
     }
 
     /**
+     * Check if the restructuring is done already
+     * @return boolean
+     */
+    public function doneAlready()
+    {
+        // See if the default 'public' directory exists
+        return (! is_readable(base_path('public')));
+    }
+
+    /**
+     * Notify about the restructuring being done already
+     * @return void
+     */
+    public function notifyDoneAlready()
+    {
+        $this->command->info('Restructuring seems to have been done already');
+        $this->command->comment("The 'public' directory doesn't exist in the base directory");
+    }
+
+    /**
      * Show a warning about this command
      * @return void
      */
-    protected function showWarning()
+    public function showWarning()
     {
         $this->command->error('Warning: this is a potentially destructive operation');
         $this->command->error('and should only be done in new Laravel projects');
@@ -41,7 +61,7 @@ class RestructureCommand
      * Describe the new files/directories structure
      * @return void
      */
-    protected function describeChangeStructure()
+    public function describeChangeStructure()
     {
         $this->command->comment('- Change the directory and files structure to this:');
         $this->command->comment('  |-- ' . sprintf('%s/', config('embark.laravel_directory_name')));
@@ -59,7 +79,7 @@ class RestructureCommand
      * Describe the new Application class
      * @return void
      */
-    protected function describeApplicationClass()
+    public function describeApplicationClass()
     {
         $this->command->comment(sprintf(
             '- Add %s\\Application, specifies new public path',
@@ -71,7 +91,7 @@ class RestructureCommand
      * Describe the new $app variable
      * @return void
      */
-    protected function describeAppVariable()
+    public function describeAppVariable()
     {
         $this->command->comment(sprintf(
             '- Make the $app variable in bootstrap/app.php an instance of %s\\Application',
@@ -83,7 +103,7 @@ class RestructureCommand
      * Describe the changed paths in the public index.php
      * @return void
      */
-    protected function describeIndexPaths()
+    public function describeIndexPaths()
     {
         $this->command->comment(sprintf(
             '- Change the \'vendor\' and \'bootstrap\' paths in %s/index.php',
@@ -95,7 +115,7 @@ class RestructureCommand
      * Describe the changed paths in the public index.php
      * @return void
      */
-    protected function describeGitignorePaths()
+    public function describeGitignorePaths()
     {
         $this->command->comment(sprintf(
             '- Change the Laravel (%s) and public (%s) paths in .gitignore',
@@ -108,7 +128,7 @@ class RestructureCommand
      * Describe the moving of the User model
      * @return void
      */
-    protected function describeModelMoving()
+    public function describeModelMoving()
     {
         $this->command->comment('- Move app/User.php to app/Models/User.php');
     }
@@ -117,12 +137,17 @@ class RestructureCommand
      * Ask for confirmation to continue
      * @return boolean
      */
-    protected function askForConfirmation()
+    public function askForConfirmation()
     {
-        return $this->command->confirm('Would you like to continue?', false);
+        $this->confirmed = $this->command->confirm('Would you like to continue?', false);
+        return $this->confirmed;
     }
 
-    protected function confirmAborting()
+    /**
+     * Show some text that confirms aborting
+     * @return void
+     */
+    public function showAbortingText()
     {
         $this->command->info('Restructuring is aborted');
     }
@@ -140,11 +165,6 @@ class RestructureCommand
         $this->describeIndexPaths();
         $this->describeGitignorePaths();
         $this->describeModelMoving();
-        $this->confirmed = $this->askForConfirmation();
-
-        if (! $this->confirmed) {
-            $this->confirmAborting();
-        }
     }
 
     /**
