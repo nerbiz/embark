@@ -12,6 +12,6 @@ class Application extends BaseApplication
      */
     public function publicPath()
     {
-        return realpath($this->basePath . '/../public_html');
+        return realpath($this->basePath . '/../' . config('embark.public_directory_name'));
     }
 }

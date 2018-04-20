@@ -39,4 +39,17 @@ return [
 
     'generating_namespace' => 'Main',
 
+    /*
+    |--------------------------------------------------------------------------
+    | The name of the public directory
+    |--------------------------------------------------------------------------
+    |
+    | For the command that moves all Laravel files to /laravel, and moves
+    | the public directory next to /laravel. It also adjusts paths
+    | accordingly.
+    |
+    */
+
+    'public_directory_name' => 'public_html',
+
 ];
