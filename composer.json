@@ -1,0 +1,28 @@
+{
+    "name": "nerbiz/embark",
+    "description": "A jumpstart for Laravel projects.",
+    "type": "library",
+    "license": "Unlicense",
+    "authors": [
+        {
+            "name": "Sybren Dijkstra",
+            "email": "nerbiz@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Nerbiz\\Embark\\": "src"
+        }
+    },
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nerbiz\\Embark\\EmbarkServiceProvider"
+            ]
+        }
+    },
+    "support" : {
+        "docs": "https://github.com/nerbiz/embark"
+    }
+}
