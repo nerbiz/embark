@@ -1,0 +1,16 @@
+@include abstract-generator($__palette, 'color', 'color', setting('important', 'color'));
+@include abstract-generator($__palette, 'bg-color', 'background-color', setting('important', 'background-color'));
+
+@include abstract-generator($__font-families, 'font-family', 'font-family', setting('important', 'font-family'));
+
+@include abstract-generator($__font-sizes, 'font-size', 'font-size', setting('important', 'font-size'));
+
+@include abstract-generator($__font-weights, 'font-weight', 'font-weight', setting('important', 'font-weight'));
+
+@include abstract-generator($__line-heights, 'line-height', 'line-height', setting('important', 'line-height'));
+
+@include abstract-generator($__border-widths, 'bw', 'border-width', setting('important', 'border-width'));
+@include abstract-generator($__border-widths, 'bwt', 'border-top-width', setting('important', 'border-width'));
+@include abstract-generator($__border-widths, 'bwb', 'border-bottom-width', setting('important', 'border-width'));
+@include abstract-generator($__border-widths, 'bwl', 'border-left-width', setting('important', 'border-width'));
+@include abstract-generator($__border-widths, 'bwr', 'border-right-width', setting('important', 'border-width'));

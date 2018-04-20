@@ -20,6 +20,11 @@ class EmbarkServiceProvider extends ServiceProvider
             dirname(__FILE__, 2) . '/config/embark.php' => config_path('embark.php')
         ], 'embark-config');
 
+        // Copy .scss files to the resources directory
+        $this->publishes([
+            dirname(__FILE__, 2) . '/scss' => resource_path('assets/sass/embark')
+        ], 'embark-scss');
+
         // Register the console commands
         if ($this->app->runningInConsole()) {
             $this->commands([
