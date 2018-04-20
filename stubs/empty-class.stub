@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace;
+
+class DummyClass
+{
+    /**
+     * Description
+     */
+    public function __construct()
+    {
+    }
+}
