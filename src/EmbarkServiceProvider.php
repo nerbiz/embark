@@ -4,6 +4,7 @@ namespace Nerbiz\Embark;
 
 use Illuminate\Support\ServiceProvider;
 use Nerbiz\Embark\Commands\MakeEmptyClassCommand;
+use Nerbiz\Embark\Commands\MigrateMakeCommand;
 
 class EmbarkServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,8 @@ class EmbarkServiceProvider extends ServiceProvider
         // Register the console commands
         if ($this->app->runningInConsole()) {
             $this->commands([
-                MakeEmptyClassCommand::class
+                MakeEmptyClassCommand::class,
+                MigrateMakeCommand::class
             ]);
         }
     }
