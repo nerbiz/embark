@@ -18,7 +18,7 @@ class EmbarkServiceProvider extends ServiceProvider
         // Copy the config file to the config directory
         $this->publishes([
             dirname(__FILE__, 2) . '/config/embark.php' => config_path('embark.php')
-        ], 'config');
+        ], 'embark-config');
 
         // Register the console commands
         if ($this->app->runningInConsole()) {
