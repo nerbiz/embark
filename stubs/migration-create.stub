@@ -1,0 +1,45 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Nerbiz\Embark\Migrations\MigrationHelper;
+
+class DummyClass extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        $migrationHelper = app()->make(MigrationHelper::class);
+
+        if (! Schema::hasTable('DummyTable')) {
+            Schema::create('DummyTable', function (Blueprint $table) use ($migrationHelper) {
+                $migrationHelper->primaryString($table);
+                // $migrationHelper->foreignString($table, 'user_id');
+                $table->timestamps();
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        /*
+        if (Schema::hasTable('DummyTable')) {
+            Schema::table('DummyTable', function (Blueprint $table) {
+                $table->dropForeign(['user_id']);
+            });
+        }
+        */
+
+        Schema::dropIfExists('DummyTable');
+    }
+}
