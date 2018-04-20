@@ -44,12 +44,12 @@ return [
     | The name of the public directory
     |--------------------------------------------------------------------------
     |
-    | For the command that moves all Laravel files to /laravel, and moves
-    | the public directory next to /laravel. It also adjusts paths
-    | accordingly.
+    | For the command that moves all Laravel and public files to separate
+    | directories. Also used for adjusting paths accordingly afterwards.
     |
     */
 
+    'laravel_directory_name' => 'laravel',
     'public_directory_name' => 'public_html',
 
 ];
