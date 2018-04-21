@@ -2,29 +2,8 @@
 
 namespace Nerbiz\Embark\Restructure;
 
-use Illuminate\Foundation\Console\ClosureCommand;
-
-class RestructureBase implements RestructureInterface
+class RestructureBase extends AbstractRestructure
 {
-    /**
-     * @var ClosureCommand
-     */
-    protected $command;
-
-    /**
-     * Whether or not the user confirmed to continue
-     * @var boolean
-     */
-    protected $confirmed;
-
-    /**
-     * @param ClosureCommand $command
-     */
-    public function __construct(ClosureCommand $command)
-    {
-        $this->command = $command;
-    }
-
     /**
      * Check if the restructuring is done already
      * @return boolean
@@ -139,29 +118,5 @@ class RestructureBase implements RestructureInterface
         foreach ($moveItems as $item) {
             rename(base_path($item), base_path($laravelDirname . '/' . $item));
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function showSucceededText()
-    {
-        $this->command->info('Restructuring finished');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function showFailedText()
-    {
-        $this->command->info('Restructuring is aborted');
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isConfirmed()
-    {
-        return $this->confirmed;
     }
 }
