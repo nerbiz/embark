@@ -97,7 +97,8 @@ class RestructureBase implements RestructureInterface
      */
     public function askForConfirmation()
     {
-        $this->confirmed = $this->closureCommand->confirm('Would you like to continue?', false);
+        $question = "Would you like to continue? (type 'yes' to confirm)";
+        $this->confirmed = ($this->closureCommand->ask($question) === 'yes');
         return $this->confirmed;
     }
 
