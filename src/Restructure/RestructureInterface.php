@@ -2,7 +2,7 @@
 
 namespace Nerbiz\Embark\Restructure;
 
-class RestructureInterface
+interface RestructureInterface
 {
     /**
      * Perform the restructuring operations
