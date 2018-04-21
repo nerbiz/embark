@@ -10,7 +10,7 @@ Artisan::command('embark:restructure', function () {
     // Check if the restructuring has been done already
     if ($restructureBase->isDoneAlready()) {
         $restructureBase->showDoneAlreadyText();
-        $restructureBase->showAbortingText();
+        $restructureBase->showFailedText();
         return;
     }
 
@@ -19,8 +19,18 @@ Artisan::command('embark:restructure', function () {
     $confirmed = $restructureBase->askForConfirmation();
 
     // Show 'aborting' text when the user didn't confirm
-    if (! $confirmed) {
-        $restructureBase->showAbortingText();
+    if ($confirmed !== true) {
+        $restructureBase->showFailedText();
         return;
+    }
+
+    // Perform the restructuring
+    $succeeded = $restructureBase->restructure();
+
+    // Show the 'aborting' text, if something went wrong
+    if ($succeeded === false) {
+        $restructureBase->showFailedText();
+    } else {
+        $restructureBase->showSucceededText();
     }
 })->describe('Move Laravel and public files to separate directories');

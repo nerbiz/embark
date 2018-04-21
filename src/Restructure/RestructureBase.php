@@ -42,16 +42,7 @@ class RestructureBase implements RestructureInterface
     public function showDoneAlreadyText()
     {
         $this->closureCommand->info('Restructuring seems to have been done already');
-        $this->closureCommand->comment("The 'public' directory doesn't exist in the base directory");
-    }
-
-    /**
-     * Show some text that confirms aborting
-     * @return void
-     */
-    public function showAbortingText()
-    {
-        $this->closureCommand->info('Restructuring is aborted');
+        $this->closureCommand->error("The 'public' directory doesn't exist in the base directory");
     }
 
     /**
@@ -115,7 +106,54 @@ class RestructureBase implements RestructureInterface
      */
     public function restructure()
     {
-        //
+        $currentPublicPath = public_path();
+        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
+        $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
+
+        // Check if the Laravel directory to be created, already exists
+        if (is_readable(base_path($laravelDirname))) {
+            $this->closureCommand->error(sprintf(
+                "The '%s' directory already exists, can't create the Laravel directory",
+                $laravelDirname
+            ));
+
+            return false;
+        }
+
+        // Create the Laravel directory
+        mkdir(base_path($laravelDirname));
+
+        // Rename the public directory, if the new name is different
+        if (basename($currentPublicPath) !== $newPublicDirname) {
+            rename($currentPublicPath, base_path($newPublicDirname));
+        }
+
+        // See which items in the base directory need to be moved
+        $baseContents = array_diff(scandir(base_path()), ['.', '..']);
+        $moveItems = array_diff($baseContents, config('embark.exclude_from_laravel_dir'));
+        // The public and Laravel directory are also excluded
+        $moveItems = array_diff($moveItems, [$newPublicDirname, $laravelDirname]);
+
+        // Move the items into the Laravel directory
+        foreach ($moveItems as $item) {
+            rename(base_path($item), base_path($laravelDirname . '/' . $item));
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function showSucceededText()
+    {
+        $this->closureCommand->info('Restructuring finished');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function showFailedText()
+    {
+        $this->closureCommand->info('Restructuring is aborted');
     }
 
     /**

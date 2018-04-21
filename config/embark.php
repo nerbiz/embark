@@ -62,6 +62,7 @@ return [
     | separate Laravel directory.
     |
     */
+
     'exclude_from_laravel_dir' => [
         '.idea',
         '.git',
