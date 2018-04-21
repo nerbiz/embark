@@ -26,6 +26,21 @@ abstract class AbstractRestructure
     }
 
     /**
+     * Check if the restructuring is done already
+     * @return boolean
+     */
+    abstract public function isDoneAlready();
+
+    /**
+     * Notify that the restructuring has been done already
+     * @return void
+     */
+    public function showDoneAlreadyText()
+    {
+        $this->command->info('Restructuring seems to have been done already');
+    }
+
+    /**
      * Perform the restructuring operations
      * @return void
      */

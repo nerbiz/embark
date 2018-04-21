@@ -5,8 +5,7 @@ namespace Nerbiz\Embark\Restructure;
 class RestructureBase extends AbstractRestructure
 {
     /**
-     * Check if the restructuring is done already
-     * @return boolean
+     * {@inheritdoc}
      */
     public function isDoneAlready()
     {
@@ -15,12 +14,11 @@ class RestructureBase extends AbstractRestructure
     }
 
     /**
-     * Notify that the restructuring has been done already
-     * @return void
+     * {@inheritdoc}
      */
     public function showDoneAlreadyText()
     {
-        $this->command->info('Restructuring seems to have been done already');
+        parent::showDoneAlreadyText();
         $this->command->error("The 'public' directory doesn't exist in the base directory");
     }
 
