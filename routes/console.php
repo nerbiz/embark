@@ -4,7 +4,7 @@ use Nerbiz\Embark\Restructure\RestructureBase;
 
 Artisan::command('embark:restructure', function () {
     $restructureBase = app()->make(RestructureBase::class, [
-        'closureCommand' => $this
+        'command' => $this
     ]);
 
     // Check if the restructuring has been done already

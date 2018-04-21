@@ -9,7 +9,7 @@ class RestructureBase implements RestructureInterface
     /**
      * @var ClosureCommand
      */
-    protected $closureCommand;
+    protected $command;
 
     /**
      * Whether or not the user confirmed to continue
@@ -18,11 +18,11 @@ class RestructureBase implements RestructureInterface
     protected $confirmed;
 
     /**
-     * @param ClosureCommand $closureCommand
+     * @param ClosureCommand $command
      */
-    public function __construct(ClosureCommand $closureCommand)
+    public function __construct(ClosureCommand $command)
     {
-        $this->closureCommand = $closureCommand;
+        $this->command = $command;
     }
 
     /**
@@ -41,8 +41,8 @@ class RestructureBase implements RestructureInterface
      */
     public function showDoneAlreadyText()
     {
-        $this->closureCommand->info('Restructuring seems to have been done already');
-        $this->closureCommand->error("The 'public' directory doesn't exist in the base directory");
+        $this->command->info('Restructuring seems to have been done already');
+        $this->command->error("The 'public' directory doesn't exist in the base directory");
     }
 
     /**
@@ -87,7 +87,7 @@ class RestructureBase implements RestructureInterface
         // Output all the messages
         foreach ($texts as $text) {
             list($type, $message) = $text;
-            $this->closureCommand->{$type}($message);
+            $this->command->{$type}($message);
         }
     }
 
@@ -98,7 +98,7 @@ class RestructureBase implements RestructureInterface
     public function askForConfirmation()
     {
         $question = "Would you like to continue? (type 'yes' to confirm)";
-        $this->confirmed = ($this->closureCommand->ask($question) === 'yes');
+        $this->confirmed = ($this->command->ask($question) === 'yes');
         return $this->confirmed;
     }
 
@@ -113,7 +113,7 @@ class RestructureBase implements RestructureInterface
 
         // Check if the Laravel directory to be created, already exists
         if (is_readable(base_path($laravelDirname))) {
-            $this->closureCommand->error(sprintf(
+            $this->command->error(sprintf(
                 "The '%s' directory already exists, can't create the Laravel directory",
                 $laravelDirname
             ));
@@ -146,7 +146,7 @@ class RestructureBase implements RestructureInterface
      */
     public function showSucceededText()
     {
-        $this->closureCommand->info('Restructuring finished');
+        $this->command->info('Restructuring finished');
     }
 
     /**
@@ -154,7 +154,7 @@ class RestructureBase implements RestructureInterface
      */
     public function showFailedText()
     {
-        $this->closureCommand->info('Restructuring is aborted');
+        $this->command->info('Restructuring is aborted');
     }
 
     /**
