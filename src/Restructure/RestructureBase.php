@@ -98,8 +98,14 @@ class RestructureBase extends AbstractRestructure
             return false;
         }
 
+        // Add the custom Application class
+        $this->createApplicationClass();
+
+        // Update the bootstrap file
+        $this->adjustBootstrapFile();
+
         // Create the Laravel directory
-        mkdir(base_path($laravelDirname));
+        mkdir(base_path($laravelDirname), 0755);
 
         // Rename the public directory, if the new name is different
         if (basename($currentPublicPath) !== $newPublicDirname) {
@@ -116,5 +122,51 @@ class RestructureBase extends AbstractRestructure
         foreach ($moveItems as $item) {
             rename(base_path($item), base_path($laravelDirname . '/' . $item));
         }
+    }
+
+    /**
+     * Create a custom Application class
+     * @return void
+     */
+    protected function createApplicationClass()
+    {
+        $generatingNamespace = config('embark.generating_namespace');
+        $namespacePath = rtrim(app_path(str_replace('\\', '/', $generatingNamespace)), '/');
+        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
+
+        // Get the stub contents and adjust it
+        $applicationStub = file_get_contents(dirname(__FILE__, 3) . '/stubs/Application.stub');
+        $applicationStub = str_replace(
+            ['DummyNamespace', 'DummyPublicDirname'],
+            ['App\\' . $generatingNamespace, $newPublicDirname],
+            $applicationStub
+        );
+
+        // Create the namespace directory if it doesn't exist yet
+        if (! file_exists($namespacePath)) {
+            mkdir($namespacePath, 0755, true);
+        }
+
+        // Save the new Application file
+        file_put_contents($namespacePath . '/Application.php', $applicationStub);
+    }
+
+    /**
+     * Adjust the $app variable in bootstrap/app.php
+     * @return void
+     */
+    protected function adjustBootstrapFile()
+    {
+        $bootstrapFilepath = base_path('bootstrap/app.php');
+        $newApplicationClass = 'App\\' . config('embark.generating_namespace') . '\\Application';
+
+        $bootstrapContents = str_replace(
+            '$app = new Illuminate\\Foundation\\Application(',
+            '$app = new ' . $newApplicationClass . '(',
+            file_get_contents($bootstrapFilepath)
+        );
+
+        // Update the file
+        file_put_contents($bootstrapFilepath, $bootstrapContents);
     }
 }

@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Foundation\Application as BaseApplication;
+
+class Application extends BaseApplication
+{
+    /**
+     * Specify a custom public directory
+     * @return string
+     */
+    public function publicPath()
+    {
+        return realpath(base_path('../DummyPublicDirname'));
+    }
+}

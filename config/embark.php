@@ -68,6 +68,6 @@ return [
         '.git',
         '.gitattributes',
         '.gitignore'
-    ]
+    ],
 
 ];
