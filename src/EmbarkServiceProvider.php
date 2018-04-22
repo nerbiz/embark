@@ -25,6 +25,9 @@ class EmbarkServiceProvider extends ServiceProvider
             dirname(__FILE__, 2) . '/scss' => resource_path('assets/sass/embark')
         ], 'embark-scss');
 
+        // Load console routes
+        $this->loadRoutesFrom(dirname(__FILE__, 2) . '/routes/console.php');
+
         // Register the console commands
         if ($this->app->runningInConsole()) {
             $this->commands([

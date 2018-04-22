@@ -1,17 +1,17 @@
 <?php
 
-namespace Nerbiz\Embark;
+namespace DummyNamespace;
 
 use Illuminate\Foundation\Application as BaseApplication;
 
 class Application extends BaseApplication
 {
     /**
-     * Specify the public directory path
+     * Specify a custom public directory
      * @return string
      */
     public function publicPath()
     {
-        return realpath($this->basePath . '/../public_html');
+        return realpath(base_path('../DummyPublicDirname'));
     }
 }

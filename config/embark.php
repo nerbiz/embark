@@ -39,4 +39,39 @@ return [
 
     'generating_namespace' => 'Main',
 
+    /*
+    |--------------------------------------------------------------------------
+    | The name of the public directory
+    |--------------------------------------------------------------------------
+    |
+    | For the command that moves all Laravel and public files to separate
+    | directories. Also used for adjusting paths accordingly afterwards.
+    |
+    */
+
+    'laravel_directory_name' => 'laravel',
+    'public_directory_name' => 'public_html',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Files to keep in place, when moving the Laravel directory
+    |--------------------------------------------------------------------------
+    |
+    | Add the file/directory names that need to stay in the main directory.
+    | All other files will be moved to a separate Laravel directory.
+    |
+    | Always excluded:
+    | /laravel     (the separate Laravel directory itself,
+    |               created before moving files into it)
+    | /public_html (the renamed public directory, renamed before moving)
+    | .idea
+    | .git
+    | .gitattributes
+    | .gitignore
+    |
+    */
+
+    'exclude_from_laravel_dir' => [
+    ],
+
 ];
