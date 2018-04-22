@@ -32,37 +32,10 @@ abstract class AbstractRestructure
     abstract public function isDoneAlready();
 
     /**
-     * Notify that the restructuring has been done already
-     * @return void
-     */
-    public function showDoneAlreadyText()
-    {
-        $this->command->info('Restructuring seems to have been done already');
-    }
-
-    /**
      * Perform the restructuring operations
      * @return boolean Indicates if the restructuring succeeded or not
      */
     abstract public function restructure();
-
-    /**
-     * Show some text that confirms aborting
-     * @return void
-     */
-    public function showSucceededText()
-    {
-        $this->command->info('Restructuring is finished');
-    }
-
-    /**
-     * Show some text that confirms aborting
-     * @return void
-     */
-    public function showFailedText()
-    {
-        $this->command->info('Restructuring is aborted');
-    }
 
     /**
      * @return boolean
@@ -70,5 +43,13 @@ abstract class AbstractRestructure
     public function isConfirmed()
     {
         return $this->confirmed;
+    }
+
+    /**
+     * @param boolean $confirmed
+     */
+    public function setConfirmed($confirmed)
+    {
+        $this->confirmed = $confirmed;
     }
 }

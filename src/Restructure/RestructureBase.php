@@ -2,17 +2,56 @@
 
 namespace Nerbiz\Embark\Restructure;
 
+use Illuminate\Foundation\Console\ClosureCommand;
+
 class RestructureBase extends AbstractRestructure
 {
+    /**
+     * The name of the laravel directory to be created
+     * @var string
+     */
+    protected $laravelDirname;
+
+    /**
+     * The new name of the public directory
+     * @var string
+     */
+    protected $newPublicDirname;
+
+    /**
+     * The namespace of generated files (without App)
+     * @var string
+     */
+    protected $generatingNamespace;
+
+    /**
+     * The full namespace path of generated files
+     * @var string
+     */
+    protected $generatingNamespacePath;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(ClosureCommand $command)
+    {
+        parent::__construct($command);
+
+        $this->laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
+        $this->newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
+        $this->generatingNamespace = config('embark.generating_namespace');
+        $this->generatingNamespacePath = rtrim(
+            app_path(str_replace('\\', '/', $this->generatingNamespace)),
+            '/'
+        );
+    }
+
     /**
      * Get the list of files/directories to exclude from the new Laravel directory
      * @return array
      */
     public function getExcludedList()
     {
-        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
-        $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
-
         // Get the user-defined exclude list, must be an array
         $userExcludedFiles = config('embark.exclude_from_laravel_dir');
         if ($userExcludedFiles === null || ! is_array($userExcludedFiles)) {
@@ -20,8 +59,8 @@ class RestructureBase extends AbstractRestructure
         }
 
         return array_unique(array_merge([
-            $newPublicDirname,
-            $laravelDirname,
+            $this->laravelDirname,
+            $this->newPublicDirname,
             '.idea',
             '.git',
             '.gitattributes',
@@ -41,79 +80,13 @@ class RestructureBase extends AbstractRestructure
     /**
      * {@inheritdoc}
      */
-    public function showDoneAlreadyText()
-    {
-        parent::showDoneAlreadyText();
-        $this->command->error("The 'public' directory doesn't exist in the base directory");
-    }
-
-    /**
-     * Show a confirmation text, before continuing
-     * @return void
-     */
-    public function showConfirmationText()
-    {
-        $texts = [
-            ['error',   'Warning: this is a potentially destructive operation'],
-            ['error',   'and should only be done in new Laravel projects'],
-            ['info',    'These are the actions that will be performed:'],
-            ['comment', '- Change the directory and files structure to this:']
-        ];
-
-        foreach ($this->getExcludedList() as $path) {
-            $texts[] = ['comment', sprintf('  |-- %s', $path)];
-        }
-
-        $texts = array_merge_recursive($texts, [
-            ['comment', sprintf(
-                '- Add %s\\Application, specifies new public path',
-                config('embark.generating_namespace')
-            )],
-            ['comment', sprintf(
-                '- Make the $app variable in bootstrap/app.php an instance of %s\\Application',
-                config('embark.generating_namespace')
-            )],
-            ['comment', sprintf(
-                '- Change the \'vendor\' and \'bootstrap\' paths in %s/index.php',
-                config('embark.public_directory_name')
-            )],
-            ['comment', sprintf(
-                '- Change the Laravel (%s) and public (%s) paths in .gitignore',
-                config('embark.laravel_directory_name'),
-                config('embark.public_directory_name')
-            )]
-        ]);
-
-        // Output all the messages
-        foreach ($texts as $text) {
-            list($type, $message) = $text;
-            $this->command->{$type}($message);
-        }
-    }
-
-    /**
-     * Ask for confirmation to continue
-     * @return boolean
-     */
-    public function askForConfirmation()
-    {
-        $question = "Would you like to continue? (type 'yes' to confirm)";
-        $this->confirmed = ($this->command->ask($question) === 'yes');
-        return $this->confirmed;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function restructure()
     {
-        $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
-
         // Check if the Laravel directory to be created, already exists
-        if (is_readable(base_path($laravelDirname))) {
+        if (is_readable(base_path($this->laravelDirname))) {
             $this->command->error(sprintf(
                 "The '%s' directory already exists, can't create the Laravel directory",
-                $laravelDirname
+                $this->laravelDirname
             ));
 
             return false;
@@ -143,25 +116,20 @@ class RestructureBase extends AbstractRestructure
      */
     protected function createApplicationClass()
     {
-        $generatingNamespace = config('embark.generating_namespace');
-        $namespacePath = rtrim(app_path(str_replace('\\', '/', $generatingNamespace)), '/');
-        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
-
         // Get the stub contents and adjust it
-        $applicationStub = file_get_contents(dirname(__FILE__, 3) . '/stubs/Application.stub');
         $applicationStub = str_replace(
             ['DummyNamespace', 'DummyPublicDirname'],
-            ['App\\' . $generatingNamespace, $newPublicDirname],
-            $applicationStub
+            ['App\\' . $this->generatingNamespace, $this->newPublicDirname],
+            file_get_contents(dirname(__FILE__, 3) . '/stubs/Application.stub')
         );
 
         // Create the namespace directory if it doesn't exist yet
-        if (! file_exists($namespacePath)) {
-            mkdir($namespacePath, 0755, true);
+        if (! file_exists($this->generatingNamespacePath)) {
+            mkdir($this->generatingNamespacePath, 0755, true);
         }
 
         // Save the new Application file
-        file_put_contents($namespacePath . '/Application.php', $applicationStub);
+        file_put_contents($this->generatingNamespacePath . '/Application.php', $applicationStub);
     }
 
     /**
@@ -171,7 +139,7 @@ class RestructureBase extends AbstractRestructure
     protected function adjustBootstrapFile()
     {
         $bootstrapFilepath = base_path('bootstrap/app.php');
-        $newApplicationClass = 'App\\' . config('embark.generating_namespace') . '\\Application';
+        $newApplicationClass = 'App\\' . $this->generatingNamespace . '\\Application';
 
         // Adjust the $app variable
         $bootstrapContents = str_replace(
@@ -191,12 +159,11 @@ class RestructureBase extends AbstractRestructure
     protected function adjustPublicIndexFile()
     {
         $publicIndexFilepath = public_path('index.php');
-        $laravelDirname = config('embark.laravel_directory_name');
 
         // Adjust the paths
         $indexFileContents = str_replace(
             '__DIR__.\'/../',
-            sprintf('dirname(__FILE__, 2) . \'/%s/', $laravelDirname),
+            sprintf('dirname(__FILE__, 2) . \'/%s/', $this->laravelDirname),
             file_get_contents($publicIndexFilepath)
         );
 
@@ -210,21 +177,19 @@ class RestructureBase extends AbstractRestructure
      */
     protected function adjustGitignoreFile()
     {
-        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
-        $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
         $gitignoreFilepath = base_path('.gitignore');
 
         // Change the Laravel path
         $gitignoreFileContents = preg_replace(
             '~^/(?!public)~m',
-            '/' . $laravelDirname . '/',
+            '/' . $this->laravelDirname . '/',
             file_get_contents($gitignoreFilepath)
         );
 
         // Change the public path
         $gitignoreFileContents = str_replace(
             '/public/',
-            '/' . $newPublicDirname . '/',
+            '/' . $this->newPublicDirname . '/',
             $gitignoreFileContents
         );
 
@@ -239,15 +204,13 @@ class RestructureBase extends AbstractRestructure
     protected function moveFilesToLaravelDirectory()
     {
         $currentPublicPath = public_path();
-        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
-        $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
 
         // Create the Laravel directory
-        mkdir(base_path($laravelDirname), 0755);
+        mkdir(base_path($this->laravelDirname), 0755);
 
         // Rename the public directory, if the new name is different
-        if (basename($currentPublicPath) !== $newPublicDirname) {
-            rename($currentPublicPath, base_path($newPublicDirname));
+        if (basename($currentPublicPath) !== $this->newPublicDirname) {
+            rename($currentPublicPath, base_path($this->newPublicDirname));
         }
 
         // See which items in the base directory need to be moved
@@ -259,7 +222,7 @@ class RestructureBase extends AbstractRestructure
 
         // Move the items into the Laravel directory
         foreach ($moveItems as $item) {
-            rename(base_path($item), base_path($laravelDirname . '/' . $item));
+            rename(base_path($item), base_path($this->laravelDirname . '/' . $item));
         }
     }
 }

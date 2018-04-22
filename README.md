@@ -6,8 +6,6 @@ There were some things that I did/used with new Laravel projects, so putting tho
 ## This is still a work in progress.
 ## I'd prefer to make a wiki for this, but all in good time.
 
----
-
 ## Installation
 The intended Laravel version is 5.6, I haven't tested it in previous versions.
 
@@ -26,6 +24,15 @@ Publishing the .scss files is optional, because you can also import them from th
 These are the Artisan commands included in this package:
 * `embark:empty-class`: Creates an empty class with only a constructor. The namespace for it can be configured in `config/embark.php`.
 * `embark:migration`: Works in the same way as (extends) `make:migration`, but uses custom stubs, including the MigrationHelper of this package.
+* `embark:restructure`: Adjusts the directory structure, creates a 'laravel' directory next to the public directory.
+* `embark:webpack`: Intended to use with `embark:restructure`, this overwrites the webpack.mix.js file, using the new public directory path.
+
+Explanation for `embark:restructure`:  
+I guess this is mostly useful for shared hosting, or other environments with limited control.
+
+Usually, the public directory is called 'public_html', not 'public' as in Laravel. There are usually also a number of files and directories next to the public directory, like things for stats, FTP, SSH, mailboxes etc. I don't prefer to mix those with Laravel files, so my idea was to move all those files to a separate 'laravel' directory. The end result is a 'laravel' and 'public_html' directory, next to each other.
+
+Paths have also been taken care of in this command, so you can just start building.
 
 ## Usage
 ### Migration helper

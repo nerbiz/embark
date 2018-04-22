@@ -12,6 +12,6 @@ class Application extends BaseApplication
      */
     public function publicPath()
     {
-        return realpath(base_path('../DummyPublicDirname'));
+        return realpath(rtrim($this->basePath, '/') . '/../DummyPublicDirname');
     }
 }
