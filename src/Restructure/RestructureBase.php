@@ -101,8 +101,11 @@ class RestructureBase extends AbstractRestructure
         // Add the custom Application class
         $this->createApplicationClass();
 
-        // Update the bootstrap file
+        // Update the bootstrap/app.php file
         $this->adjustBootstrapFile();
+
+        // Update the public index.php file
+        $this->adjustPublicIndexFile();
 
         // Create the Laravel directory
         mkdir(base_path($laravelDirname), 0755);
@@ -160,6 +163,7 @@ class RestructureBase extends AbstractRestructure
         $bootstrapFilepath = base_path('bootstrap/app.php');
         $newApplicationClass = 'App\\' . config('embark.generating_namespace') . '\\Application';
 
+        // Adjust the $app variable
         $bootstrapContents = str_replace(
             '$app = new Illuminate\\Foundation\\Application(',
             '$app = new ' . $newApplicationClass . '(',
@@ -168,5 +172,25 @@ class RestructureBase extends AbstractRestructure
 
         // Update the file
         file_put_contents($bootstrapFilepath, $bootstrapContents);
+    }
+
+    /**
+     * Adjust the public index.php file
+     * @return void
+     */
+    public function adjustPublicIndexFile()
+    {
+        $publicIndexFilepath = public_path('index.php');
+        $laravelDirname = config('embark.laravel_directory_name');
+
+        // Adjust the paths
+        $indexFileContents = str_replace(
+            '__DIR__.\'/../',
+            sprintf('dirname(__FILE__, 2) . \'/%s/', $laravelDirname),
+            file_get_contents($publicIndexFilepath)
+        );
+
+        // Update the file
+        file_put_contents($publicIndexFilepath, $indexFileContents);
     }
 }
