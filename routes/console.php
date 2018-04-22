@@ -2,6 +2,7 @@
 
 use Nerbiz\Embark\Restructure\RestructureBase;
 use Nerbiz\Embark\ConsoleMessages\RestructureBaseMessages;
+use Nerbiz\Embark\ConsoleMessages\WebpackMessages;
 
 Artisan::command('embark:restructure', function () {
     $restructureBase = app()->make(RestructureBase::class, [
@@ -16,7 +17,7 @@ Artisan::command('embark:restructure', function () {
     if ($restructureBase->isDoneAlready()) {
         $restructureBaseMessages->infoDoneAlready();
         $restructureBaseMessages->infoAborted();
-        return;
+        return false;
     }
 
     // Show a text before continuing
@@ -26,7 +27,7 @@ Artisan::command('embark:restructure', function () {
     // Show 'aborting' text when the user didn't confirm
     if ($confirmed !== true) {
         $restructureBaseMessages->infoAborted();
-        return;
+        return false;
     }
 
     // Perform the restructuring
@@ -35,6 +36,7 @@ Artisan::command('embark:restructure', function () {
     // Show the 'aborting' text, if something went wrong
     if ($succeeded === true) {
         $restructureBaseMessages->infoSucceeded();
+        $restructureBaseMessages->commentChangeDir();
     } else {
         $restructureBaseMessages->infoAborted();
     }
@@ -43,6 +45,20 @@ Artisan::command('embark:restructure', function () {
 
 
 Artisan::command('embark:webpack', function () {
+    $webpackMessages = app()->make(WebpackMessages::class, [
+        'command' => $this
+    ]);
+
+    $webpackMessages->warnDestructive();
+    $webpackMessages->infoDescribe();
+    $confirmed = $webpackMessages->askConfirmation();
+
+    // Show 'aborting' text when the user didn't confirm
+    if ($confirmed !== true) {
+        $webpackMessages->infoAborted();
+        return false;
+    }
+
     $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
 
     $webpackStub = str_replace(
@@ -52,4 +68,6 @@ Artisan::command('embark:webpack', function () {
     );
 
     file_put_contents(base_path('webpack.mix.js'), $webpackStub);
+
+    $webpackMessages->infoSucceeded();
 })->describe('Publish webpack.mix.js file, using custom public directory name');

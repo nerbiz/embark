@@ -2,6 +2,8 @@
 
 namespace Nerbiz\Embark\Restructure;
 
+use Illuminate\Foundation\Console\ClosureCommand;
+
 class RestructureBase extends AbstractRestructure
 {
     /**
@@ -57,8 +59,8 @@ class RestructureBase extends AbstractRestructure
         }
 
         return array_unique(array_merge([
-            $this->newPublicDirname,
             $this->laravelDirname,
+            $this->newPublicDirname,
             '.idea',
             '.git',
             '.gitattributes',

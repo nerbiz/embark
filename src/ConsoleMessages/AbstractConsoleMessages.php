@@ -46,4 +46,22 @@ abstract class AbstractConsoleMessages
         $question = "Would you like to continue? (type 'yes' to confirm)";
         return ($this->command->ask($question) === 'yes');
     }
+
+    /**
+     * Show some text that confirms aborting
+     * @return void
+     */
+    public function infoSucceeded()
+    {
+        $this->command->info('Finished');
+    }
+
+    /**
+     * Show some text that confirms aborting
+     * @return void
+     */
+    public function infoAborted()
+    {
+        $this->command->info('Aborted');
+    }
 }

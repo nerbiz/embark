@@ -49,4 +49,16 @@ class RestructureBaseMessages extends AbstractRestructureMessages
             config('embark.public_directory_name')
         ));
     }
+
+    /**
+     * Notify about changing directory after moving
+     * @return void
+     */
+    public function commentChangeDir()
+    {
+        $this->command->comment(sprintf(
+            "You can now type 'cd %s'",
+            config('embark.laravel_directory_name')
+        ));
+    }
 }
