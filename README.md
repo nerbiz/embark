@@ -25,6 +25,7 @@ These are the Artisan commands included in this package:
 * `embark:empty-class`: Creates an empty class with only a constructor. The namespace for it can be configured in `config/embark.php`.
 * `embark:migration`: Works in the same way as (extends) `make:migration`, but uses custom stubs, including the MigrationHelper of this package.
 * `embark:restructure`: Adjusts the directory structure, creates a 'laravel' directory next to the public directory.
+* `embark:webpack`: Intended to use with `embark:restructure`, this overwrites the webpack.mix.js file, using the new public directory path.
 
 Explanation for `embark:restructure`:  
 I guess this is mostly useful for shared hosting, or other environments with limited control.
