@@ -22,7 +22,7 @@ class EmbarkServiceProvider extends ServiceProvider
 
         // Copy .scss files to the resources directory
         $this->publishes([
-            dirname(__FILE__, 2) . '/scss' => resource_path('assets/sass/embark')
+            dirname(__FILE__, 2) . '/resources/scss' => resource_path('assets/sass/embark')
         ], 'embark-scss');
 
         // Load console routes
