@@ -1,9 +1,15 @@
 # Release notes
 
+## 0.5.0
+
+* Added the 'embark:webpack' command, which overwrites webpack.mix.js, using the custom public path, with some extras.
+* Updated the readme file.
+* Fixed: base_path() didn't work in the custom Application class.
+
 ## 0.4.0
 
 * Improved the readme file.
-* Added an 'embark:restructure' command, which changes the directory structure.
+* Added the 'embark:restructure' command, which changes the directory structure.
 
 ## 0.3.0
 
