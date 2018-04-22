@@ -58,16 +58,20 @@ return [
     |--------------------------------------------------------------------------
     |
     | Add the file/directory names that need to stay in the main directory.
-    | All other files, except the public directory will be moved to a
-    | separate Laravel directory.
+    | All other files will be moved to a separate Laravel directory.
+    |
+    | Always excluded:
+    | /laravel     (the separate Laravel directory itself,
+    |               created before moving files into it)
+    | /public_html (the renamed public directory, renamed before moving)
+    | .idea
+    | .git
+    | .gitattributes
+    | .gitignore
     |
     */
 
     'exclude_from_laravel_dir' => [
-        '.idea',
-        '.git',
-        '.gitattributes',
-        '.gitignore'
     ],
 
 ];

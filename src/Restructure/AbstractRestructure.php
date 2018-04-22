@@ -42,7 +42,7 @@ abstract class AbstractRestructure
 
     /**
      * Perform the restructuring operations
-     * @return void
+     * @return boolean Indicates if the restructuring succeeded or not
      */
     abstract public function restructure();
 

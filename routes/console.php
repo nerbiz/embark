@@ -28,9 +28,9 @@ Artisan::command('embark:restructure', function () {
     $succeeded = $restructureBase->restructure();
 
     // Show the 'aborting' text, if something went wrong
-    if ($succeeded === false) {
-        $restructureBase->showFailedText();
-    } else {
+    if ($succeeded === true) {
         $restructureBase->showSucceededText();
+    } else {
+        $restructureBase->showFailedText();
     }
 })->describe('Move Laravel and public files to separate directories');

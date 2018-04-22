@@ -5,6 +5,31 @@ namespace Nerbiz\Embark\Restructure;
 class RestructureBase extends AbstractRestructure
 {
     /**
+     * Get the list of files/directories to exclude from the new Laravel directory
+     * @return array
+     */
+    public function getExcludedList()
+    {
+        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
+        $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
+
+        // Get the user-defined exclude list, must be an array
+        $userExcludedFiles = config('embark.exclude_from_laravel_dir');
+        if ($userExcludedFiles === null || ! is_array($userExcludedFiles)) {
+            $userExcludedFiles = [];
+        }
+
+        return array_unique(array_merge([
+            $newPublicDirname,
+            $laravelDirname,
+            '.idea',
+            '.git',
+            '.gitattributes',
+            '.gitignore'
+        ], $userExcludedFiles));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function isDoneAlready()
@@ -32,12 +57,10 @@ class RestructureBase extends AbstractRestructure
             ['error',   'Warning: this is a potentially destructive operation'],
             ['error',   'and should only be done in new Laravel projects'],
             ['info',    'These are the actions that will be performed:'],
-            ['comment', '- Change the directory and files structure to this:'],
-            ['comment', '  |-- ' . sprintf('%s/', config('embark.laravel_directory_name'))],
-            ['comment', '  |-- ' . sprintf('%s/', config('embark.public_directory_name'))]
+            ['comment', '- Change the directory and files structure to this:']
         ];
 
-        foreach (config('embark.exclude_from_laravel_dir') as $path) {
+        foreach ($this->getExcludedList() as $path) {
             $texts[] = ['comment', sprintf('  |-- %s', $path)];
         }
 
@@ -84,8 +107,6 @@ class RestructureBase extends AbstractRestructure
      */
     public function restructure()
     {
-        $currentPublicPath = public_path();
-        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
         $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
 
         // Check if the Laravel directory to be created, already exists
@@ -107,24 +128,13 @@ class RestructureBase extends AbstractRestructure
         // Update the public index.php file
         $this->adjustPublicIndexFile();
 
-        // Create the Laravel directory
-        mkdir(base_path($laravelDirname), 0755);
+        // Update the .gitignore file
+        $this->adjustGitignoreFile();
 
-        // Rename the public directory, if the new name is different
-        if (basename($currentPublicPath) !== $newPublicDirname) {
-            rename($currentPublicPath, base_path($newPublicDirname));
-        }
+        // Move the files
+        $this->moveFilesToLaravelDirectory();
 
-        // See which items in the base directory need to be moved
-        $baseContents = array_diff(scandir(base_path()), ['.', '..']);
-        $moveItems = array_diff($baseContents, config('embark.exclude_from_laravel_dir'));
-        // The public and Laravel directory are also excluded
-        $moveItems = array_diff($moveItems, [$newPublicDirname, $laravelDirname]);
-
-        // Move the items into the Laravel directory
-        foreach ($moveItems as $item) {
-            rename(base_path($item), base_path($laravelDirname . '/' . $item));
-        }
+        return true;
     }
 
     /**
@@ -178,7 +188,7 @@ class RestructureBase extends AbstractRestructure
      * Adjust the public index.php file
      * @return void
      */
-    public function adjustPublicIndexFile()
+    protected function adjustPublicIndexFile()
     {
         $publicIndexFilepath = public_path('index.php');
         $laravelDirname = config('embark.laravel_directory_name');
@@ -192,5 +202,64 @@ class RestructureBase extends AbstractRestructure
 
         // Update the file
         file_put_contents($publicIndexFilepath, $indexFileContents);
+    }
+
+    /**
+     * Update the paths in .gitignore
+     * @return void
+     */
+    protected function adjustGitignoreFile()
+    {
+        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
+        $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
+        $gitignoreFilepath = base_path('.gitignore');
+
+        // Change the Laravel path
+        $gitignoreFileContents = preg_replace(
+            '~^/(?!public)~m',
+            '/' . $laravelDirname . '/',
+            file_get_contents($gitignoreFilepath)
+        );
+
+        // Change the public path
+        $gitignoreFileContents = str_replace(
+            '/public/',
+            '/' . $newPublicDirname . '/',
+            $gitignoreFileContents
+        );
+
+        // Update the file
+        file_put_contents($gitignoreFilepath, $gitignoreFileContents);
+    }
+
+    /**
+     * Move the Laravel files to a separate directory
+     * @return void
+     */
+    protected function moveFilesToLaravelDirectory()
+    {
+        $currentPublicPath = public_path();
+        $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
+        $laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
+
+        // Create the Laravel directory
+        mkdir(base_path($laravelDirname), 0755);
+
+        // Rename the public directory, if the new name is different
+        if (basename($currentPublicPath) !== $newPublicDirname) {
+            rename($currentPublicPath, base_path($newPublicDirname));
+        }
+
+        // See which items in the base directory need to be moved
+        $moveItems = array_diff(
+            scandir(base_path()),
+            ['.', '..'],
+            $this->getExcludedList()
+        );
+
+        // Move the items into the Laravel directory
+        foreach ($moveItems as $item) {
+            rename(base_path($item), base_path($laravelDirname . '/' . $item));
+        }
     }
 }
