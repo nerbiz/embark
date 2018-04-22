@@ -44,4 +44,12 @@ abstract class AbstractRestructure
     {
         return $this->confirmed;
     }
+
+    /**
+     * @param boolean $confirmed
+     */
+    public function setConfirmed($confirmed)
+    {
+        $this->confirmed = $confirmed;
+    }
 }
