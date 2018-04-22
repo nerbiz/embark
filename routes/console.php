@@ -1,26 +1,31 @@
 <?php
 
 use Nerbiz\Embark\Restructure\RestructureBase;
+use Nerbiz\Embark\ConsoleMessages\RestructureBaseMessages;
 
 Artisan::command('embark:restructure', function () {
     $restructureBase = app()->make(RestructureBase::class, [
         'command' => $this
     ]);
 
+    $restructureBaseMessages = app()->make(RestructureBaseMessages::class, [
+        'command' => $this
+    ]);
+
     // Check if the restructuring has been done already
     if ($restructureBase->isDoneAlready()) {
-        $restructureBase->showDoneAlreadyText();
-        $restructureBase->showFailedText();
+        $restructureBaseMessages->infoDoneAlready();
+        $restructureBaseMessages->infoAborted();
         return;
     }
 
     // Show a text before continuing
-    $restructureBase->showConfirmationText();
-    $confirmed = $restructureBase->askForConfirmation();
+    $restructureBaseMessages->infoConfirmation($restructureBase->getExcludedList());
+    $confirmed = $restructureBaseMessages->askConfirmation();
 
     // Show 'aborting' text when the user didn't confirm
     if ($confirmed !== true) {
-        $restructureBase->showFailedText();
+        $restructureBaseMessages->infoAborted();
         return;
     }
 
@@ -29,9 +34,9 @@ Artisan::command('embark:restructure', function () {
 
     // Show the 'aborting' text, if something went wrong
     if ($succeeded === true) {
-        $restructureBase->showSucceededText();
+        $restructureBaseMessages->infoSucceeded();
     } else {
-        $restructureBase->showFailedText();
+        $restructureBaseMessages->infoAborted();
     }
 })->describe('Move Laravel and public files to separate directories');
 
