@@ -34,3 +34,17 @@ Artisan::command('embark:restructure', function () {
         $restructureBase->showFailedText();
     }
 })->describe('Move Laravel and public files to separate directories');
+
+
+
+Artisan::command('embark:webpack', function () {
+    $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
+
+    $webpackStub = str_replace(
+        'DummyPublicDirname',
+        $newPublicDirname,
+        file_get_contents(dirname(__FILE__, 2) . '/stubs/resources/webpack.mix.stub')
+    );
+
+    file_put_contents(base_path('webpack.mix.js'), $webpackStub);
+})->describe('Publish webpack.mix.js file, using custom public directory name');

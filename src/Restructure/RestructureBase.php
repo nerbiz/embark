@@ -148,11 +148,10 @@ class RestructureBase extends AbstractRestructure
         $newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
 
         // Get the stub contents and adjust it
-        $applicationStub = file_get_contents(dirname(__FILE__, 3) . '/stubs/Application.stub');
         $applicationStub = str_replace(
             ['DummyNamespace', 'DummyPublicDirname'],
             ['App\\' . $generatingNamespace, $newPublicDirname],
-            $applicationStub
+            file_get_contents(dirname(__FILE__, 3) . '/stubs/Application.stub')
         );
 
         // Create the namespace directory if it doesn't exist yet
