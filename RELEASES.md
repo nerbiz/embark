@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.4.0
+
+* Improved the readme file.
+* Added an 'embark:restructure' command, which changes the directory structure.
+
 ## 0.3.0
 
 * Not using env() in config file anymore.
