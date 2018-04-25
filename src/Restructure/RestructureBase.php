@@ -2,8 +2,6 @@
 
 namespace Nerbiz\Embark\Restructure;
 
-use Illuminate\Foundation\Console\ClosureCommand;
-
 class RestructureBase extends AbstractRestructure
 {
     /**
@@ -31,12 +29,16 @@ class RestructureBase extends AbstractRestructure
     protected $generatingNamespacePath;
 
     /**
+     * The user-defined list of files to exclude from the Laravel directory
+     * @var array
+     */
+    protected $userExcludedFiles;
+
+    /**
      * {@inheritdoc}
      */
-    public function __construct(ClosureCommand $command)
+    public function __construct()
     {
-        parent::__construct($command);
-
         $this->laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
         $this->newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
         $this->generatingNamespace = config('embark.generating_namespace');
@@ -44,6 +46,12 @@ class RestructureBase extends AbstractRestructure
             app_path(str_replace('\\', '/', $this->generatingNamespace)),
             '/'
         );
+        $this->userExcludedFiles = config('embark.exclude_from_laravel_dir');
+
+        // The user-defined exclude list must be an array
+        if ($this->userExcludedFiles === null || ! is_array($this->userExcludedFiles)) {
+            $this->userExcludedFiles = [];
+        }
     }
 
     /**
@@ -52,12 +60,6 @@ class RestructureBase extends AbstractRestructure
      */
     public function getExcludedList()
     {
-        // Get the user-defined exclude list, must be an array
-        $userExcludedFiles = config('embark.exclude_from_laravel_dir');
-        if ($userExcludedFiles === null || ! is_array($userExcludedFiles)) {
-            $userExcludedFiles = [];
-        }
-
         return array_unique(array_merge([
             $this->laravelDirname,
             $this->newPublicDirname,
@@ -65,7 +67,7 @@ class RestructureBase extends AbstractRestructure
             '.git',
             '.gitattributes',
             '.gitignore'
-        ], $userExcludedFiles));
+        ], $this->userExcludedFiles));
     }
 
     /**
@@ -74,7 +76,7 @@ class RestructureBase extends AbstractRestructure
     public function isDoneAlready()
     {
         // See if the default 'public' directory exists
-        return (! is_readable(base_path('public')));
+        return (is_readable(base_path($this->laravelDirname)) || ! is_readable(base_path('public')));
     }
 
     /**
@@ -82,16 +84,6 @@ class RestructureBase extends AbstractRestructure
      */
     public function restructure()
     {
-        // Check if the Laravel directory to be created, already exists
-        if (is_readable(base_path($this->laravelDirname))) {
-            $this->command->error(sprintf(
-                "The '%s' directory already exists, can't create the Laravel directory",
-                $this->laravelDirname
-            ));
-
-            return false;
-        }
-
         // Add the custom Application class
         $this->createApplicationClass();
 

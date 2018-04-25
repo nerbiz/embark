@@ -24,6 +24,7 @@ Publishing the .scss files is optional, because you can also import them from th
 These are the Artisan commands included in this package:
 * `embark:empty-class`: Creates an empty class with only a constructor. The namespace for it can be configured in `config/embark.php`.
 * `embark:migration`: Works in the same way as (extends) `make:migration`, but uses custom stubs, including the MigrationHelper of this package.
+* `embark:move-models`: Move the User model to a models namespace, defined in `config/embark.php`, and update files that use the User model.
 * `embark:restructure`: Adjusts the directory structure, creates a 'laravel' directory next to the public directory.
 * `embark:webpack`: Intended to use with `embark:restructure`, this overwrites the webpack.mix.js file, using the new public directory path.
 
@@ -46,8 +47,8 @@ Default settings for the 'on update/delete' actions are in `config/embark.php`.
 This method assumes that 'category_id' references 'id' on 'categories', which is why this method is shorter.
 
 ### Database class
-* `makeUniquePrimaryString($modelClass, $column = 'id')`  
-Creates a unique string for a (primary key) column, using the varchar length defined in `config/embark.php`. It is unique per column, not for all columns/tables. So theoretically it's possible that 'table_1.id' contains the same value as 'table_2.id'.
+* `makeUniqueString($modelClass, $column = 'id')`  
+Creates a unique string for a column (intended for priamry keys, but works with any column), using the varchar length defined in `config/embark.php`. It is unique per column, not for all columns/tables. So theoretically it's possible that 'table_1.id' contains the same value as 'table_2.id'.
 
 ### SCSS
 The below shows the paths for including the .scss files from the vendor directory. The files are intended for Bootstrap 4, but they're also useful without it. This is what the app.scss file would look like:

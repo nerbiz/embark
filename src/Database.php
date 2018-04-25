@@ -8,10 +8,10 @@ class Database
      * Generate a unique random string for use as a primary key
      * While intended for primary keys, this can be used for any column
      * @param  string $modelClass Fully qualified classname of an Eloquent model
-     * @param  string $column     The primary key column to generate the string for
+     * @param  string $column     The column to generate the string for
      * @return string
      */
-    public function makeUniquePrimaryString($modelClass, $column = 'id')
+    public function makeUniqueString($modelClass, $column = 'id')
     {
         // Generate a string, and re-generate it, if it already exists
         do {

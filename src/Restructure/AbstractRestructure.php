@@ -2,28 +2,13 @@
 
 namespace Nerbiz\Embark\Restructure;
 
-use Illuminate\Foundation\Console\ClosureCommand;
-
 abstract class AbstractRestructure
 {
-    /**
-     * @var ClosureCommand
-     */
-    protected $command;
-
     /**
      * Whether or not the user confirmed to continue
      * @var boolean
      */
     protected $confirmed;
-
-    /**
-     * @param ClosureCommand $command
-     */
-    public function __construct(ClosureCommand $command)
-    {
-        $this->command = $command;
-    }
 
     /**
      * Check if the restructuring is done already
