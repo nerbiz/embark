@@ -24,6 +24,7 @@ Publishing the .scss files is optional, because you can also import them from th
 These are the Artisan commands included in this package:
 * `embark:empty-class`: Creates an empty class with only a constructor. The namespace for it can be configured in `config/embark.php`.
 * `embark:migration`: Works in the same way as (extends) `make:migration`, but uses custom stubs, including the MigrationHelper of this package.
+* `embark:move-models`: Move the User model to a models namespace, defined in `config/embark.php`, and update files that use the User model.
 * `embark:restructure`: Adjusts the directory structure, creates a 'laravel' directory next to the public directory.
 * `embark:webpack`: Intended to use with `embark:restructure`, this overwrites the webpack.mix.js file, using the new public directory path.
 
