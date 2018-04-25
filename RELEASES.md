@@ -1,5 +1,12 @@
 # Release notes
 
+## 0.6.0
+
+* Renamed Database::makeUniquePrimaryString() to makeUniqueString().
+* Added the 'embark:move-models' command.
+* Added the 'models_namespace' setting in config.
+* Updated the readme file.
+
 ## 0.5.0
 
 * Added the 'embark:webpack' command, which overwrites webpack.mix.js, using the custom public path, with some extras.
