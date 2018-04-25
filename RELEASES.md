@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.6.2
+
+* Changed the description line of this project.
+* Improved a comment in the config file.
+
 ## 0.6.1
 
 * Removed the 'work in progress' text from the readme file.
