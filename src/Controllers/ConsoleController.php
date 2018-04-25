@@ -4,8 +4,10 @@ namespace Nerbiz\Embark\Controllers;
 
 use Illuminate\Foundation\Console\ClosureCommand;
 use Nerbiz\Embark\ConsoleMessages\RestructureBaseMessages;
+use Nerbiz\Embark\ConsoleMessages\RestructureModelsMessages;
 use Nerbiz\Embark\ConsoleMessages\WebpackMessages;
 use Nerbiz\Embark\Restructure\RestructureBase;
+use Nerbiz\Embark\Restructure\RestructureModels;
 
 class ConsoleController
 {
@@ -40,7 +42,7 @@ class ConsoleController
             return false;
         }
 
-        // Show a text before continuing
+        // Ask for confirmation before continuing
         $restructureBaseMessages->infoConfirmation($restructureBase->getExcludedList());
         $confirmed = $restructureBaseMessages->askConfirmation();
 
@@ -59,6 +61,48 @@ class ConsoleController
             $restructureBaseMessages->commentChangeDir();
         } else {
             $restructureBaseMessages->infoAborted();
+        }
+
+        return true;
+    }
+
+    /**
+     * Move the User model to the Models namespace
+     * @return boolean
+     */
+    public function restructureModels()
+    {
+        $restructureModels = app()->make(RestructureModels::class);
+        $restructureModelsMessages = app()->make(RestructureModelsMessages::class, [
+            'command' => $this->command
+        ]);
+
+        // Check if the restructuring has been done already
+        if ($restructureModels->isDoneAlready()) {
+            $restructureModelsMessages->infoDoneAlready();
+            $restructureModelsMessages->infoAborted();
+            return false;
+        }
+
+        // Ask for confirmation before continuing
+        $restructureModelsMessages->infoConfirmation($restructureModels->getFileList());
+        $confirmed = $restructureModelsMessages->askConfirmation();
+
+        // Show 'aborting' text when the user didn't confirm
+        if ($confirmed !== true) {
+            $restructureModelsMessages->infoAborted();
+            return false;
+        }
+
+        // Perform the restructuring
+        $succeeded = $restructureModels->restructure();
+
+        // Show the 'aborting' text, if something went wrong
+        if ($succeeded === true) {
+            $restructureModelsMessages->infoSucceeded();
+            $restructureModelsMessages->commentModelCreation();
+        } else {
+            $restructureModelsMessages->infoAborted();
         }
 
         return true;

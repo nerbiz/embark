@@ -41,6 +41,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Namespace for the models
+    |--------------------------------------------------------------------------
+    |
+    | This namespace is used for creating a separate models namespace.
+    | The User model will be moved into it.
+    |
+    */
+
+    'models_namespace' => 'Models',
+
+    /*
+    |--------------------------------------------------------------------------
     | The name of the public directory
     |--------------------------------------------------------------------------
     |
