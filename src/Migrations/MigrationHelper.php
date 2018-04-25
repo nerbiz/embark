@@ -55,18 +55,19 @@ class MigrationHelper
         $onUpdate = null,
         $onDelete = null
     ) {
+        // Derive the foreign table name, if no explicit one is given
+        if ($foreignTable === null) {
+            // Convert something like 'category_id' to 'categories'
+            $foreignTable = str_plural(preg_replace('~_id$~', '', $foreignKey));
+        }
+
+        // Get the 'on update/delete' actions from settings, if null
         if ($onUpdate === null) {
             $onUpdate = config('embark.default_on_update');
         }
 
         if ($onDelete === null) {
             $onDelete = config('embark.default_on_delete');
-        }
-
-        // Derive the foreign table name, if no explicit one is given
-        if ($foreignTable === null) {
-            // Convert something like 'category_id' to 'categories'
-            $foreignTable = str_plural(preg_replace('~_id$~', '', $foreignKey));
         }
 
         // Set the foreign key
