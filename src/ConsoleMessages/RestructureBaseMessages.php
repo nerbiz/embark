@@ -2,8 +2,40 @@
 
 namespace Nerbiz\Embark\ConsoleMessages;
 
+use Illuminate\Foundation\Console\ClosureCommand;
+
 class RestructureBaseMessages extends AbstractRestructureMessages
 {
+    /**
+     * The name of the laravel directory to be created
+     * @var string
+     */
+    protected $laravelDirname;
+
+    /**
+     * The new name of the public directory
+     * @var string
+     */
+    protected $newPublicDirname;
+
+    /**
+     * The namespace of generated files (without App)
+     * @var string
+     */
+    protected $generatingNamespace;
+
+    /**
+     * @param ClosureCommand $command
+     */
+    public function __construct(ClosureCommand $command)
+    {
+        parent::__construct($command);
+
+        $this->laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
+        $this->newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
+        $this->generatingNamespace = config('embark.generating_namespace');
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -14,7 +46,7 @@ class RestructureBaseMessages extends AbstractRestructureMessages
         $this->command->comment("The 'public' directory doesn't exist in the base directory");
         $this->command->comment(sprintf(
             "And/or: The '%s' directory already exists",
-            config('embark.laravel_directory_name')
+            $this->laravelDirname
         ));
     }
 
@@ -35,23 +67,23 @@ class RestructureBaseMessages extends AbstractRestructureMessages
 
         $this->command->comment(sprintf(
             '- Add %s\\Application, specifies new public path',
-            config('embark.generating_namespace')
+            $this->generatingNamespace
         ));
 
         $this->command->comment(sprintf(
             '- Make the $app variable in bootstrap/app.php an instance of %s\\Application',
-            config('embark.generating_namespace')
+            $this->generatingNamespace
         ));
 
         $this->command->comment(sprintf(
             '- Change the \'vendor\' and \'bootstrap\' paths in %s/index.php',
-            config('embark.public_directory_name')
+            $this->newPublicDirname
         ));
 
         $this->command->comment(sprintf(
             '- Change the Laravel (%s) and public (%s) paths in .gitignore',
-            config('embark.laravel_directory_name'),
-            config('embark.public_directory_name')
+            $this->laravelDirname,
+            $this->newPublicDirname
         ));
     }
 
@@ -63,7 +95,7 @@ class RestructureBaseMessages extends AbstractRestructureMessages
     {
         $this->command->comment(sprintf(
             "You can now type 'cd %s'",
-            config('embark.laravel_directory_name')
+            $this->laravelDirname
         ));
     }
 }

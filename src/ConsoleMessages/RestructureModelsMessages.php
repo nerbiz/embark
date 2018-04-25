@@ -2,8 +2,26 @@
 
 namespace Nerbiz\Embark\ConsoleMessages;
 
+use Illuminate\Foundation\Console\ClosureCommand;
+
 class RestructureModelsMessages extends AbstractRestructureMessages
 {
+    /**
+     * The new namespace for models
+     * @var string
+     */
+    protected $modelsNamespace;
+
+    /**
+     * @param ClosureCommand $command
+     */
+    public function __construct(ClosureCommand $command)
+    {
+        parent::__construct($command);
+
+        $this->modelsNamespace = config('embark.models_namespace');
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -12,8 +30,8 @@ class RestructureModelsMessages extends AbstractRestructureMessages
         parent::infoDoneAlready();
 
         $this->command->comment(sprintf(
-            "The User model is already in the '%s' namespace",
-            config('embark.models_namespace')
+            "The User model is already in the 'App\%s' namespace",
+            $this->modelsNamespace
         ));
     }
 
@@ -24,17 +42,15 @@ class RestructureModelsMessages extends AbstractRestructureMessages
      */
     public function infoConfirmation($fileList)
     {
-        $modelsNamespace = config('embark.models_namespace');
-
         $this->warnDestructive();
         $this->command->info('These are the actions that will be performed:');
         $this->command->comment(sprintf(
             "- Create the 'App\%s' namespace if it doesn't exist yet",
-            $modelsNamespace
+            $this->modelsNamespace
         ));
         $this->command->comment(sprintf(
             "- Move the User model to the 'App\%s' namespace",
-            $modelsNamespace
+            $this->modelsNamespace
         ));
         $this->command->comment('- Change the User namespace in these files:');
 
@@ -51,7 +67,7 @@ class RestructureModelsMessages extends AbstractRestructureMessages
     {
         $this->command->comment(sprintf(
             "You can use 'php artisan make:model %s/YourModel' from now on",
-            str_replace('\\', '/', config('embark.models_namespace'))
+            str_replace('\\', '/', $this->modelsNamespace)
         ));
     }
 }

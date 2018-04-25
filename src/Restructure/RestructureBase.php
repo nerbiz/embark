@@ -29,6 +29,12 @@ class RestructureBase extends AbstractRestructure
     protected $generatingNamespacePath;
 
     /**
+     * The user-defined list of files to exclude from the Laravel directory
+     * @var array
+     */
+    protected $userExcludedFiles;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct()
@@ -40,6 +46,12 @@ class RestructureBase extends AbstractRestructure
             app_path(str_replace('\\', '/', $this->generatingNamespace)),
             '/'
         );
+        $this->userExcludedFiles = config('embark.exclude_from_laravel_dir');
+
+        // The user-defined exclude list must be an array
+        if ($this->userExcludedFiles === null || ! is_array($this->userExcludedFiles)) {
+            $this->userExcludedFiles = [];
+        }
     }
 
     /**
@@ -48,12 +60,6 @@ class RestructureBase extends AbstractRestructure
      */
     public function getExcludedList()
     {
-        // Get the user-defined exclude list, must be an array
-        $userExcludedFiles = config('embark.exclude_from_laravel_dir');
-        if ($userExcludedFiles === null || ! is_array($userExcludedFiles)) {
-            $userExcludedFiles = [];
-        }
-
         return array_unique(array_merge([
             $this->laravelDirname,
             $this->newPublicDirname,
@@ -61,7 +67,7 @@ class RestructureBase extends AbstractRestructure
             '.git',
             '.gitattributes',
             '.gitignore'
-        ], $userExcludedFiles));
+        ], $this->userExcludedFiles));
     }
 
     /**
