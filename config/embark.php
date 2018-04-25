@@ -24,6 +24,7 @@ return [
     | table changes.
     |
     */
+
     'default_on_update' => 'cascade',
     'default_on_delete' => 'restrict',
 
@@ -45,7 +46,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This namespace is used for creating a separate models namespace.
-    | The User model will be moved into it.
+    | The User model will be moved into it. Please note that backslashes
+    | need to be escaped: 'Models\\Sub'.
     |
     */
 
