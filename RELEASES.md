@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.6.1
+
+* Removed the 'work in progress' text from the readme file.
+* Added a version constraint to the Installation part of the readme file.
+
 ## 0.6.0
 
 * Renamed Database::makeUniquePrimaryString() to makeUniqueString().
