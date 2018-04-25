@@ -26,7 +26,7 @@ class ConsoleController
      * Move Laravel and public files to separate directories
      * @return boolean
      */
-    public function base()
+    public function restructureBase()
     {
         $restructureBase = app()->make(RestructureBase::class);
         $restructureBaseMessages = app()->make(RestructureBaseMessages::class, [
@@ -68,7 +68,7 @@ class ConsoleController
      * Publish webpack.mix.js file, using custom public directory name
      * @return boolean
      */
-    public function webpack()
+    public function publishWebpack()
     {
         $webpackMessages = app()->make(WebpackMessages::class, [
             'command' => $this->command

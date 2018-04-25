@@ -2,7 +2,7 @@
 
 namespace Nerbiz\Embark\ConsoleMessages;
 
-abstract class AbstractRestructureMessages extends AbstractConsoleMessages
+abstract class AbstractRestructureMessages extends AbstractMessages
 {
     /**
      * Notify that the restructuring has been done already

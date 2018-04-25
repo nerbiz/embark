@@ -2,7 +2,7 @@
 
 namespace Nerbiz\Embark\ConsoleMessages;
 
-class WebpackMessages extends AbstractConsoleMessages
+class WebpackMessages extends AbstractMessages
 {
     /**
      * Describe what will be changed

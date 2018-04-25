@@ -4,7 +4,7 @@ namespace Nerbiz\Embark\ConsoleMessages;
 
 use Illuminate\Foundation\Console\ClosureCommand;
 
-abstract class AbstractConsoleMessages
+abstract class AbstractMessages
 {
     /**
      * @var ClosureCommand
