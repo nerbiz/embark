@@ -3,14 +3,11 @@ A jumpstart for Laravel projects.
 
 There were some things that I did/used with new Laravel projects, so putting those things in a package speeds up that process. Maybe you'll find it useful as well. This package is in the public domain (using the [Unlicense](http://unlicense.org/)), so go ahead and use it for anything.
 
-## This is still a work in progress.
-## I'd prefer to make a wiki for this, but all in good time.
-
 ## Installation
 The intended Laravel version is 5.6, I haven't tested it in previous versions.
 
 Include this project with [Composer](https://getcomposer.org/):  
-```composer require nerbiz/embark```
+```composer require nerbiz/embark 0.*```
 
 The service provider will be autodiscovered, but for completeness, the service provider file is `Nerbiz\Embark\EmbarkServiceProvider`. There is no (need for a) Facade, but who knows what the future brings.
 
