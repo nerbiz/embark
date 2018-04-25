@@ -10,7 +10,12 @@ class RestructureBaseMessages extends AbstractRestructureMessages
     public function infoDoneAlready()
     {
         parent::infoDoneAlready();
+
         $this->command->comment("The 'public' directory doesn't exist in the base directory");
+        $this->command->comment(sprintf(
+            "And/or: The '%s' directory already exists",
+            config('embark.laravel_directory_name')
+        ));
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace Nerbiz\Embark\Restructure;
 
-use Illuminate\Foundation\Console\ClosureCommand;
-
 class RestructureBase extends AbstractRestructure
 {
     /**
@@ -33,10 +31,8 @@ class RestructureBase extends AbstractRestructure
     /**
      * {@inheritdoc}
      */
-    public function __construct(ClosureCommand $command)
+    public function __construct()
     {
-        parent::__construct($command);
-
         $this->laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
         $this->newPublicDirname = rtrim(config('embark.public_directory_name'), '/');
         $this->generatingNamespace = config('embark.generating_namespace');
@@ -74,7 +70,7 @@ class RestructureBase extends AbstractRestructure
     public function isDoneAlready()
     {
         // See if the default 'public' directory exists
-        return (! is_readable(base_path('public')));
+        return (is_readable(base_path($this->laravelDirname)) || ! is_readable(base_path('public')));
     }
 
     /**
@@ -82,16 +78,6 @@ class RestructureBase extends AbstractRestructure
      */
     public function restructure()
     {
-        // Check if the Laravel directory to be created, already exists
-        if (is_readable(base_path($this->laravelDirname))) {
-            $this->command->error(sprintf(
-                "The '%s' directory already exists, can't create the Laravel directory",
-                $this->laravelDirname
-            ));
-
-            return false;
-        }
-
         // Add the custom Application class
         $this->createApplicationClass();
 
