@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.7.0
+
+* Added Database::validateString(), for checking string column validity, according to the primary string column format.
+* Added a fix for the 'max key length is 767 bytes' error (optional, defined in config), which occurs in some DB environments.
+
 ## 0.6.3
 
 * Fixed: after creating a new Controllers namespace, the path to the webpack.mix.stub file was invalid.
