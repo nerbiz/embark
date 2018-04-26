@@ -132,7 +132,7 @@ class ConsoleController
         $webpackStub = str_replace(
             'DummyPublicDirname',
             rtrim(config('embark.public_directory_name'), '/'),
-            file_get_contents(dirname(__FILE__, 2) . '/stubs/resources/webpack.mix.stub')
+            file_get_contents(dirname(__FILE__, 3) . '/stubs/resources/webpack.mix.stub')
         );
 
         // Update the file
