@@ -17,6 +17,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Fix for error:
+    | 'Specified key was too long; max key length is 767 bytes'
+    |--------------------------------------------------------------------------
+    |
+    | utf8mb4 uses 4 bytes per character, so with 767 total bytes, that
+    | means max 767 / 4 = 191.75 bytes (characters).
+    | Applies to MySQL < 5.7.7 and MariaDB < 10.2.2 (InnoDB engine), so only
+    | enable this if applicable.
+    | See 'Index Lengths & MySQL / MariaDB'
+    | on https://laravel.com/docs/master/migrations#creating-indexes
+    |
+    */
+
+    'string_length_fix' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | Default values for 'on update' and 'on delete' actions
     |--------------------------------------------------------------------------
     |

@@ -2,6 +2,7 @@
 
 namespace Nerbiz\Embark;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Nerbiz\Embark\Commands\MakeEmptyClassCommand;
 use Nerbiz\Embark\Commands\MigrateMakeCommand;
@@ -34,6 +35,11 @@ class EmbarkServiceProvider extends ServiceProvider
                 MakeEmptyClassCommand::class,
                 MigrateMakeCommand::class
             ]);
+        }
+
+        // Apply the varchar length fix if needed
+        if (config('embark.string_length_fix') === true) {
+            Schema::defaultStringLength(191);
         }
     }
 
