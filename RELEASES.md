@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.6.3
+
+* Fixed: after creating a new Controllers namespace, the path to the webpack.mix.stub file was invalid.
+
 ## 0.6.2
 
 * Changed the description line of this project.
