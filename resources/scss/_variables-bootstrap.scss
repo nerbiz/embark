@@ -21,11 +21,10 @@ $border-radius-sm:            borderradius('small');
 
 // Spacing
 $spacer:                      $__spacingAmount;
-$spacers: (
-  0:                          spacing('tiny'),
-  1:                          spacing('small'),
-  2:                          spacing('default'),
-  3:                          spacing('medium'),
-  4:                          spacing('large'),
-  5:                          spacing('huge')
-);
+
+$spacers:                     ();
+@each $number, $amount in spacing('_all') {
+  $spacers: map-merge($spacers, (
+    $number: $amount
+  ));
+}

@@ -110,13 +110,13 @@ $__palette: map-merge((
 
 // Spacing
 // This is used for classes like mb-5 and p-3
-$__spacingAmount:           10px !default;
+$__spacingAmount:         10px !default;
 $__spacing:               () !default;
 $__spacing: map-merge((
-  tiny:                   0,
-  small:                  ($__spacingAmount * .2),
-  default:                ($__spacingAmount * .5),
-  medium:                 $__spacingAmount,
-  large:                  ($__spacingAmount * 2),
-  huge:                   ($__spacingAmount * 3)
+  0:                      0,
+  1:                      ($__spacingAmount * .2),
+  2:                      ($__spacingAmount * .5),
+  3:                      $__spacingAmount,
+  4:                      ($__spacingAmount * 2),
+  5:                      ($__spacingAmount * 3)
 ), $__spacing);
