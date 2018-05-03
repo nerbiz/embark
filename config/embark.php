@@ -4,19 +4,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Varchar length for primary keys that are strings
-    |--------------------------------------------------------------------------
-    |
-    | Instead of using incrementing IDs for primary keys, it's generally
-    | safer to use random strings. This setting defines how many characters
-    | long they will be.
-    |
-    */
-
-    'string_pk_length' => 20,
-
-    /*
-    |--------------------------------------------------------------------------
     | Fix for error:
     | 'Specified key was too long; max key length is 767 bytes'
     |--------------------------------------------------------------------------
@@ -72,7 +59,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | The name of the public directory
+    | The name of the new Laravel and public directory
     |--------------------------------------------------------------------------
     |
     | For the command that moves all Laravel and public files to separate
