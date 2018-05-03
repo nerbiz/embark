@@ -18,8 +18,8 @@ class DummyClass extends Migration
 
         if (! Schema::hasTable('DummyTable')) {
             Schema::create('DummyTable', function (Blueprint $table) use ($migrationHelper) {
-                $migrationHelper->primaryString($table);
-                // $migrationHelper->foreignString($table, 'user_id');
+                $table->increments('id');
+                // $migrationHelper->foreign($table, 'user_id');
                 $table->timestamps();
             });
         }
