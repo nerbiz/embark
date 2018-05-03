@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.8.0
+
+* Improved Bootstrap spacer variables format.
+* Removed all the primary/foreign keys as strings functionality, because it's bad for performance.
+
 ## 0.7.0
 
 * Added Database::validateString(), for checking string column validity, according to the primary string column format.
