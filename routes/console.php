@@ -12,7 +12,7 @@ Artisan::command('embark:restructure', function () {
 Artisan::command('embark:models-namespace', function () {
     $consoleController = app()->make(ConsoleController::class, ['command' => $this]);
     $consoleController->restructureModels();
-})->describe('Create the App\Models namespace and move User to it');
+})->describe(sprintf('Create the App\%s namespace and move User to it', config('embark.models_namespace')));
 
 
 Artisan::command('embark:webpack', function () {
