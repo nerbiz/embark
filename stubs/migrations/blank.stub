@@ -14,9 +14,11 @@ class DummyClass extends Migration
      */
     public function up()
     {
-        $migrationHelper = app()->make(MigrationHelper::class);
+        $helper = app()->make(MigrationHelper::class);
 
-        //
+        Schema::table('', function (Blueprint $table) use ($helper) {
+            //
+        });
     }
 
     /**
@@ -26,6 +28,10 @@ class DummyClass extends Migration
      */
     public function down()
     {
-        //
+        $helper = app()->make(MigrationHelper::class);
+
+        Schema::table('', function (Blueprint $table) use ($helper) {
+            //
+        });
     }
 }
