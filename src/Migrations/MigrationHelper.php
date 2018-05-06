@@ -45,4 +45,31 @@ class MigrationHelper
             ->onUpdate($onUpdate)
             ->onDelete($onDelete);
     }
+
+    /**
+     * Drop multiple foreign keys (this doesn't drop the column(s))
+     * @param  Blueprint $table   The table to remove the foreign key(s) from
+     * @param  array     $columns 1 or more foreign keys to drop
+     * @return void
+     */
+    public function dropForeign(Blueprint $table, ...$columns)
+    {
+        foreach ($columns as $columnName) {
+            $table->dropForeign([$columnName]);
+        }
+    }
+
+    /**
+     * Drop multiple foreign key columns (first the key, then the column itself)
+     * @param  Blueprint $table   The table to remove the foreign key(s) and columns from
+     * @param  array     $columns 1 or more columns to drop
+     * @return void
+     */
+    public function dropForeignColumn(Blueprint $table, ...$columns)
+    {
+        foreach ($columns as $columnName) {
+            $table->dropForeign([$columnName]);
+            $table->dropColumn($columnName);
+        }
+    }
 }

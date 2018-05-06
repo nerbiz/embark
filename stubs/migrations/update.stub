@@ -14,10 +14,12 @@ class DummyClass extends Migration
      */
     public function up()
     {
-        $migrationHelper = app()->make(MigrationHelper::class);
+        $helper = app()->make(MigrationHelper::class);
 
-        Schema::table('DummyTable', function (Blueprint $table) use ($migrationHelper)  {
-            //
+        Schema::table('DummyTable', function (Blueprint $table) use ($helper) {
+            // $table->integer('user_id')->unsigned()->after('id');
+
+            // $helper->foreign($table, 'user_id');
         });
     }
 
@@ -28,10 +30,10 @@ class DummyClass extends Migration
      */
     public function down()
     {
-        $migrationHelper = app()->make(MigrationHelper::class);
+        $helper = app()->make(MigrationHelper::class);
 
-        Schema::table('DummyTable', function (Blueprint $table) use ($migrationHelper) {
-            //
+        Schema::table('DummyTable', function (Blueprint $table) use ($helper) {
+            // $helper->dropForeignColumn($table, 'user_id');
         });
     }
 }
