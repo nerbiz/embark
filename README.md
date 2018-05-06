@@ -16,6 +16,9 @@ The service provider will be autodiscovered, but for completeness, the service p
 Publish the config file:  
 ```php artisan vendor:publish --tag=embark-config```
 
+Publish some basic views:
+```php artisan vendor:publish --tag=embark-views```
+
 Publishing the .scss files is optional, because you can also import them from the vendor directory. See the 'Usage: SCSS' section for more info. The files will be published to `resources/assets/sass/embark`.  
 ```php artisan vendor:publish --tag=embark-scss```
 
