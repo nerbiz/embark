@@ -1,5 +1,11 @@
 # Release notes
 
+## 0.9.0
+
+* Added MigrationHelper::dropForeign() and MigrationHelper::dropForeignColumn().
+* Improved the migration stub files.
+* Renamed the 'move-models' command to 'models-namespace'.
+
 ## 0.8.0
 
 * Improved Bootstrap spacer variables format.
