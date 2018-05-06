@@ -9,10 +9,10 @@ Artisan::command('embark:restructure', function () {
 })->describe('Move Laravel and public files to separate directories');
 
 
-Artisan::command('embark:move-models', function () {
+Artisan::command('embark:models-namespace', function () {
     $consoleController = app()->make(ConsoleController::class, ['command' => $this]);
     $consoleController->restructureModels();
-})->describe('Move the User model to the Models namespace');
+})->describe('Create the App\Models namespace and move User to it');
 
 
 Artisan::command('embark:webpack', function () {
