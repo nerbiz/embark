@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.10.0
+
+* Some basic views can now be published from the service provider.
+
 ## 0.9.0
 
 * Added MigrationHelper::dropForeign() and MigrationHelper::dropForeignColumn().
