@@ -52,7 +52,7 @@ class MigrationHelper
      * @param  array     $columns 1 or more foreign keys to drop
      * @return void
      */
-    public function dropForeign($table, ...$columns)
+    public function dropForeign(Blueprint $table, ...$columns)
     {
         foreach ($columns as $columnName) {
             $table->dropForeign([$columnName]);
@@ -65,7 +65,7 @@ class MigrationHelper
      * @param  array     $columns 1 or more columns to drop
      * @return void
      */
-    public function dropForeignColumn($table, ...$columns)
+    public function dropForeignColumn(Blueprint $table, ...$columns)
     {
         foreach ($columns as $columnName) {
             $table->dropForeign([$columnName]);
