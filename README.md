@@ -1,9 +1,11 @@
 # Embark
+
 A flying start for Laravel projects.
 
 There were some things that I did/used with new Laravel projects, so putting those things in a package speeds up that process. Maybe you'll find it useful as well. This package is in the public domain (using the [Unlicense](http://unlicense.org/)), so go ahead and use it for anything.
 
 ## Installation
+
 The intended Laravel version is 5.6, I haven't tested it in previous versions.
 
 Include this project with [Composer](https://getcomposer.org/):  
@@ -18,10 +20,12 @@ Publishing the .scss files is optional, because you can also import them from th
 ```php artisan vendor:publish --tag=embark-scss```
 
 ## Commands
+
 These are the Artisan commands included in this package:
+
 * `embark:empty-class`: Creates an empty class with only a constructor. The namespace for it can be configured in `config/embark.php`.
 * `embark:migration`: Works in the same way as (extends) `make:migration`, but uses custom stubs, including the MigrationHelper of this package.
-* `embark:move-models`: Move the User model to a models namespace, defined in `config/embark.php`, and update files that use the User model.
+* `embark:models-namespace`: Create the App\Models namespace and move User to it, and update files that use the User model. Namespace name can be defined in `config/embark.php`.
 * `embark:restructure`: Adjusts the directory structure, creates a 'laravel' directory next to the public directory.
 * `embark:webpack`: Intended to use with `embark:restructure`, this overwrites the webpack.mix.js file, using the new public directory path.
 
@@ -33,13 +37,20 @@ Usually, the public directory is called 'public_html', not 'public' as in Larave
 Paths have also been taken care of in this command, so you can just start building.
 
 ## Usage
+
 ### Migration helper
+
 * `foreign(Blueprint $table, $foreignKey, $foreignTable = null, $onUpdate = null, $onDelete = null)`  
 Adds a foreign key to an existing table column.  
 Default settings for the 'on update/delete' actions are in `config/embark.php`.  
 This method assumes that 'category_id' references 'id' on 'categories', which is why this method is shorter than the default `$table->foreign()->refereces...`.
+* `dropForeign(Blueprint $table, ...$columns)`  
+Like the usual dropForeign(), only this supports multiple columns in the same call. It wraps a column name in an array, so that it uses Laravel's naming convention, [see the docs about this](https://laravel.com/docs/5.6/migrations#foreign-key-constraints).
+* `dropForeignColumn(Blueprint $table, ...$columns)`  
+Works just like dropForeignColumn, but this method also drops the column itself. Multiple columns can be passed in the same call.
 
 ### SCSS
+
 The below shows the paths for including the .scss files from the vendor directory. The files are intended for Bootstrap 4, but they're also useful without it. This is what the app.scss file would look like:
 
 ```scss
@@ -53,7 +64,9 @@ The below shows the paths for including the .scss files from the vendor director
 ```
 
 ## Contributing
+
 Please do a pull request, if you have some improvements in mind.
 
 ## License
+
 This project uses the [Unlicense](http://unlicense.org/).
