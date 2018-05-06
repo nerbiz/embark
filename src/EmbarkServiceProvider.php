@@ -16,15 +16,25 @@ class EmbarkServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $configDir = dirname(__FILE__, 2) . '/config/';
+        $resourcesDir = dirname(__FILE__, 2) . '/resources/';
+
         // Copy the config file to the config directory
         $this->publishes([
-            dirname(__FILE__, 2) . '/config/embark.php' => config_path('embark.php')
+            $configDir . 'embark.php' => config_path('embark.php'),
         ], 'embark-config');
 
         // Copy .scss files to the resources directory
         $this->publishes([
-            dirname(__FILE__, 2) . '/resources/scss' => resource_path('assets/sass/embark')
+            $resourcesDir . 'scss' => resource_path('assets/sass/embark'),
         ], 'embark-scss');
+
+        // Copy basic views to the resources directory
+        $this->publishes([
+            $resourcesDir . 'views/base.blade.php' => resource_path('views/base.blade.php'),
+            $resourcesDir . 'views/partials/head.blade.php' => resource_path('views/partials/head.blade.php'),
+            $resourcesDir . 'views/pages/home.blade.php' => resource_path('views/pages/home.blade.php'),
+        ], 'embark-views');
 
         // Load console routes
         $this->loadRoutesFrom(dirname(__FILE__, 2) . '/routes/console.php');
