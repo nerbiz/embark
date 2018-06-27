@@ -24,11 +24,6 @@ class EmbarkServiceProvider extends ServiceProvider
             $configDir . 'embark.php' => config_path('embark.php'),
         ], 'embark-config');
 
-        // Copy .scss files to the resources directory
-        $this->publishes([
-            $resourcesDir . 'scss' => resource_path('assets/sass/embark'),
-        ], 'embark-scss');
-
         // Copy basic views to the resources directory
         $this->publishes([
             $resourcesDir . 'views/base.blade.php' => resource_path('views/base.blade.php'),

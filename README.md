@@ -19,9 +19,6 @@ Publish the config file:
 Publish some basic views:
 ```php artisan vendor:publish --tag=embark-views```
 
-Publishing the .scss files is optional, because you can also import them from the vendor directory. See the 'Usage: SCSS' section for more info. The files will be published to `resources/assets/sass/embark`.  
-```php artisan vendor:publish --tag=embark-scss```
-
 ## Commands
 
 These are the Artisan commands included in this package:
@@ -51,20 +48,6 @@ This method assumes that 'category_id' references 'id' on 'categories', which is
 Like the usual dropForeign(), only this supports multiple columns in the same call. It wraps a column name in an array, so that it uses Laravel's naming convention, [see the docs about this](https://laravel.com/docs/5.6/migrations#foreign-key-constraints).
 * `dropForeignColumn(Blueprint $table, ...$columns)`  
 Works just like dropForeignColumn, but this method also drops the column itself. Multiple columns can be passed in the same call.
-
-### SCSS
-
-The below shows the paths for including the .scss files from the vendor directory. The files are intended for Bootstrap 4, but they're also useful without it. This is what the app.scss file would look like:
-
-```scss
-@import '../../../vendor/nerbiz/embark/scss/before-vendor';
-
-// ...vendors, like Bootstrap 4
-
-@import '../../../vendor/nerbiz/embark/scss/after-vendor';
-
-// ...the rest of your scss
-```
 
 ## Contributing
 
