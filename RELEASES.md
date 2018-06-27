@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.11.0
+
+* Removed the .scss files, moving it to a frontend (NPM) package.
+
 ## 0.10.0
 
 * Some basic views can now be published from the service provider.
