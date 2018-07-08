@@ -66,8 +66,8 @@ class RestructureModelsMessages extends AbstractRestructureMessages
     public function commentModelCreation()
     {
         $this->command->comment(sprintf(
-            "You can use 'php artisan make:model %s/YourModel' from now on",
-            str_replace('\\', '/', $this->modelsNamespace)
+            "The 'artisan embark:model YourModel' command uses the 'App\%s' namespace",
+            $this->modelsNamespace
         ));
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Nerbiz\Embark\Commands\MakeEmptyClassCommand;
 use Nerbiz\Embark\Commands\MigrateMakeCommand;
+use Nerbiz\Embark\Commands\ModelMakeCommand;
 
 class EmbarkServiceProvider extends ServiceProvider
 {
@@ -38,7 +39,8 @@ class EmbarkServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 MakeEmptyClassCommand::class,
-                MigrateMakeCommand::class
+                MigrateMakeCommand::class,
+                ModelMakeCommand::class,
             ]);
         }
 
