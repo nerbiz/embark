@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.12.0
+
+* Added the embark:model command, works just like make:model, but it uses the custom models namespace.
+* Added the CSRF token in a meta tag in head.blade.php (useful for JavaScript).
+
 ## 0.11.0
 
 * Removed the .scss files, moving it to a frontend (NPM) package.
