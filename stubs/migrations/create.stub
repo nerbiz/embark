@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Nerbiz\Embark\Migrations\MigrationHelper;
+use Nerbiz\Embark\Facades\Schema;
+use Nerbiz\Embark\Schema\Blueprint;
 
 class DummyClass extends Migration
 {
@@ -14,15 +13,13 @@ class DummyClass extends Migration
      */
     public function up()
     {
-        $helper = app()->make(MigrationHelper::class);
-
         if (! Schema::hasTable('DummyTable')) {
-            Schema::create('DummyTable', function (Blueprint $table) use ($helper) {
+            Schema::create('DummyTable', function (Blueprint $table) {
                 $table->increments('id');
                 // $table->integer('user_id')->unsigned();
                 $table->timestamps();
 
-                // $helper->foreign($table, 'user_id');
+                // $table->foreignKey('user_id');
             });
         }
     }
@@ -34,13 +31,9 @@ class DummyClass extends Migration
      */
     public function down()
     {
-        $helper = app()->make(MigrationHelper::class);
-
-        /*
-        Schema::table('DummyTable', function (Blueprint $table) use ($helper) {
-            $helper->dropForeign($table, 'user_id');
+        Schema::table('DummyTable', function (Blueprint $table) {
+            // $table->dropForeign(['user_id']);
         });
-        */
 
         Schema::dropIfExists('DummyTable');
     }

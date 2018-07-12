@@ -24,7 +24,7 @@ Publish some basic views:
 These are the Artisan commands included in this package:
 
 * `embark:empty-class`: Creates an empty class with only a constructor. The namespace for it can be configured in `config/embark.php`.
-* `embark:migration`: Works in the same way as (extends) `make:migration`, but uses custom stubs, including the MigrationHelper of this package.
+* `embark:migration`: Works in the same way as (extends) `make:migration`, but uses custom stubs, which use the custom Blueprint of this package.
 * `embark:model`: Works in the same way as (extends) `make:model`, but uses custom namespace and embark:migration instead of make:migration. The namespace for it can be configured in `config/embark.php`.
 * `embark:models-namespace`: Create the App\Models namespace and move User to it, and update files that use the User model. Namespace name can be defined in `config/embark.php`.
 * `embark:restructure`: Adjusts the directory structure, creates a 'laravel' directory next to the public directory.
@@ -39,16 +39,25 @@ Paths have also been taken care of in this command, so you can just start buildi
 
 ## Usage
 
-### Migration helper
+### Custom Blueprint
 
-* `foreign(Blueprint $table, $foreignKey, $foreignTable = null, $onUpdate = null, $onDelete = null)`  
-Adds a foreign key to an existing table column.  
-Default settings for the 'on update/delete' actions are in `config/embark.php`.  
-This method assumes that 'category_id' references 'id' on 'categories', which is why this method is shorter than the default `$table->foreign()->refereces...`.
-* `dropForeign(Blueprint $table, ...$columns)`  
-Like the usual dropForeign(), only this supports multiple columns in the same call. It wraps a column name in an array, so that it uses Laravel's naming convention, [see the docs about this](https://laravel.com/docs/5.6/migrations#foreign-key-constraints).
-* `dropForeignColumn(Blueprint $table, ...$columns)`  
-Works just like dropForeignColumn, but this method also drops the column itself. Multiple columns can be passed in the same call.
+In a migration file, replace these use statements:
+```php
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+```
+With these:
+```php
+use Nerbiz\Embark\Facades\Schema;
+use Nerbiz\Embark\Schema\Blueprint;
+```
+
+Then you can use `$table` as usual, but the `foreignKey()` method has been added.
+`foreignKey()` works the same as `foreign()`, but it adds `->references(...)->on(...)->onUpdate(...)->onDelete(...)` implicitly. For example: category_id implicitly references id on categories. The default onUpdate and onDelete values are set in `config/embark.php`.
+
+Since this method returns a Fluent instance, you can use it as you would otherwise. Therefore you could for instance overwrite an implicit foreign table name: `$table->foreignKey('category_id')->on('product_categories');`
+
+My intention is to expand the custom Blueprint with more useful methods.
 
 ## Contributing
 

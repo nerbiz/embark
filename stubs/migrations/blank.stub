@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Nerbiz\Embark\Migrations\MigrationHelper;
+use Nerbiz\Embark\Facades\Schema;
+use Nerbiz\Embark\Schema\Blueprint;
 
 class DummyClass extends Migration
 {
@@ -14,9 +13,7 @@ class DummyClass extends Migration
      */
     public function up()
     {
-        $helper = app()->make(MigrationHelper::class);
-
-        Schema::table('', function (Blueprint $table) use ($helper) {
+        Schema::table('', function (Blueprint $table) {
             //
         });
     }
@@ -28,9 +25,7 @@ class DummyClass extends Migration
      */
     public function down()
     {
-        $helper = app()->make(MigrationHelper::class);
-
-        Schema::table('', function (Blueprint $table) use ($helper) {
+        Schema::table('', function (Blueprint $table) {
             //
         });
     }
