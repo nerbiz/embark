@@ -70,10 +70,13 @@ class RestructureModels extends AbstractRestructure
 
         // Change the namespace usages in the files
         foreach ($this->getFileList() as $path) {
+            // Change the namespace in the User file
             if ($path === $userModelPath) {
                 $search = 'namespace App;';
                 $replace = sprintf('namespace App\\%s;', $this->modelsNamespace);
-            } else {
+            }
+            // Change the use statements
+            else {
                 $search = 'App\\User';
                 $replace = sprintf('App\\%s\\User', $this->modelsNamespace);
             }
