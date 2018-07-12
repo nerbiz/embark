@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.13.0
+
+* Breaking change: removed MigrationHelper, now using a custom Blueprint for migrations.
+
 ## 0.12.0
 
 * Added the embark:model command, works just like make:model, but it uses the custom models namespace.
