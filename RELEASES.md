@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.14.0
+
+* Added custom model stubs.
+* Custom stubs are now publishable (with the 'embark-stubs' tag), for easy stubs editing.
+
 ## 0.13.0
 
 * Breaking change: removed MigrationHelper, now using a custom Blueprint for migrations.
