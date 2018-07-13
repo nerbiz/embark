@@ -19,6 +19,10 @@ Publish the config file:
 Publish some basic views:
 ```php artisan vendor:publish --tag=embark-views```
 
+Publish stubs, in case you'd like to customize them:
+```php artisan vendor:publish --tag=embark-stubs```
+For convenience, the 'stubs_path' value in `config/embark.php` already points to where the stubs are published.
+
 ## Commands
 
 These are the Artisan commands included in this package:
@@ -42,11 +46,14 @@ Paths have also been taken care of in this command, so you can just start buildi
 ### Custom Blueprint
 
 In a migration file, replace these use statements:
+
 ```php
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 ```
+
 With these:
+
 ```php
 use Nerbiz\Embark\Facades\Schema;
 use Nerbiz\Embark\Schema\Blueprint;

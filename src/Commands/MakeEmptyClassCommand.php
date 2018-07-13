@@ -5,56 +5,34 @@ namespace Nerbiz\Embark\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Nerbiz\Embark\EmbarkServiceProvider;
 
 class MakeEmptyClassCommand extends GeneratorCommand
 {
     /**
-     * The name and signature of the console command.
-     *
-     * @var string
+     * {@inheritDoc}
      */
     protected $name = 'embark:empty-class';
 
     /**
-     * The console command description.
-     *
-     * @var string
+     * {@inheritDoc}
      */
     protected $description = 'Create an empty class with only a constructor';
 
     /**
-     * The type of class being generated.
-     *
-     * @var string
+     * {@inheritDoc}
      */
     protected $type = 'Empty class';
 
     /**
-     * Replace the class name for the given stub.
-     *
-     * @param  string  $stub
-     * @param  string  $name
-     * @return string
-     */
-    protected function replaceClass($stub, $name)
-    {
-        return parent::replaceClass($stub, $name);
-    }
-
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     protected function getStub() {
-        return dirname(__FILE__, 3) . '/stubs/empty-class.stub';
+        return EmbarkServiceProvider::getStubPath('empty-class.stub');
     }
 
     /**
-     * Get the default namespace for the class.
-     *
-     * @param  string  $rootNamespace
-     * @return string
+     * {@inheritDoc}
      */
     protected function getDefaultNamespace($rootNamespace)
     {
@@ -62,9 +40,7 @@ class MakeEmptyClassCommand extends GeneratorCommand
     }
 
     /**
-     * Get the console command arguments.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     protected function getArguments()
     {
@@ -74,9 +50,7 @@ class MakeEmptyClassCommand extends GeneratorCommand
     }
 
     /**
-     * Get the console command options.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     protected function getOptions()
     {

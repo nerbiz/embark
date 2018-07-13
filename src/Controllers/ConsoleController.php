@@ -3,6 +3,7 @@
 namespace Nerbiz\Embark\Controllers;
 
 use Illuminate\Foundation\Console\ClosureCommand;
+use Nerbiz\Embark\EmbarkServiceProvider;
 use Nerbiz\Embark\ConsoleMessages\RestructureBaseMessages;
 use Nerbiz\Embark\ConsoleMessages\RestructureModelsMessages;
 use Nerbiz\Embark\ConsoleMessages\WebpackMessages;
@@ -132,7 +133,7 @@ class ConsoleController
         $webpackStub = str_replace(
             'DummyPublicDirname',
             rtrim(config('embark.public_directory_name'), '/'),
-            file_get_contents(dirname(__FILE__, 3) . '/stubs/resources/webpack.mix.stub')
+            file_get_contents(EmbarkServiceProvider::getStubPath('resources/webpack.mix.stub'))
         );
 
         // Update the file

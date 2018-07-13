@@ -13,7 +13,7 @@ class Schema extends BaseSchema
      */
     public static function connection($name)
     {
-        return static::getCustomSchemaBuilder(static::$app['db']->connection($name)->getSchemaBuilder());
+        return static::getCustomSchemaBuilder(parent::connection($name));
     }
 
     /**
@@ -21,7 +21,7 @@ class Schema extends BaseSchema
      */
     protected static function getFacadeAccessor()
     {
-        return static::getCustomSchemaBuilder(static::$app['db']->connection()->getSchemaBuilder());
+        return static::getCustomSchemaBuilder(parent::getFacadeAccessor());
     }
 
     /**
