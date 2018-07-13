@@ -8,16 +8,12 @@ use Illuminate\Support\Str;
 class ModelMakeCommand extends BaseModelMakeCommand
 {
     /**
-     * The console command name.
-     *
-     * @var string
+     * {@inheritDoc}
      */
     protected $name = 'embark:model';
 
     /**
-     * Create a migration file for the model.
-     *
-     * @return void
+     * {@inheritDoc}
      */
     protected function createMigration()
     {
@@ -30,13 +26,22 @@ class ModelMakeCommand extends BaseModelMakeCommand
     }
 
     /**
-     * Get the default namespace for the class.
-     *
-     * @param  string  $rootNamespace
-     * @return string
+     * {@inheritDoc}
      */
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace . '\\' . config('embark.models_namespace');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getStub()
+    {
+        if ($this->option('pivot')) {
+            return dirname(__FILE__, 3) . '/stubs/models/pivot.model.stub';
+        }
+
+        return dirname(__FILE__, 3) . '/stubs/models/model.stub';
     }
 }
