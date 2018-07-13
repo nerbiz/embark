@@ -92,4 +92,17 @@ return [
     'exclude_from_laravel_dir' => [
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Full path to the custom stubs
+    |--------------------------------------------------------------------------
+    |
+    | Set the path to custom stubs to use for model or migation creation,
+    | for example. If a stub is not found at that path, the one in this
+    | package will be used.
+    |
+    */
+
+    'stubs_path' => resource_path('stubs'),
+
 ];

@@ -5,6 +5,7 @@ namespace Nerbiz\Embark\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Nerbiz\Embark\EmbarkServiceProvider;
 
 class MakeEmptyClassCommand extends GeneratorCommand
 {
@@ -26,16 +27,8 @@ class MakeEmptyClassCommand extends GeneratorCommand
     /**
      * {@inheritDoc}
      */
-    protected function replaceClass($stub, $name)
-    {
-        return parent::replaceClass($stub, $name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected function getStub() {
-        return dirname(__FILE__, 3) . '/stubs/empty-class.stub';
+        return EmbarkServiceProvider::getStubPath('empty-class.stub');
     }
 
     /**

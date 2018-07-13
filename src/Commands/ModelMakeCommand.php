@@ -4,6 +4,7 @@ namespace Nerbiz\Embark\Commands;
 
 use Illuminate\Foundation\Console\ModelMakeCommand as BaseModelMakeCommand;
 use Illuminate\Support\Str;
+use Nerbiz\Embark\EmbarkServiceProvider;
 
 class ModelMakeCommand extends BaseModelMakeCommand
 {
@@ -39,9 +40,9 @@ class ModelMakeCommand extends BaseModelMakeCommand
     protected function getStub()
     {
         if ($this->option('pivot')) {
-            return dirname(__FILE__, 3) . '/stubs/models/pivot.model.stub';
+            return EmbarkServiceProvider::getStubPath('models/pivot.model.stub');
         }
 
-        return dirname(__FILE__, 3) . '/stubs/models/model.stub';
+        return EmbarkServiceProvider::getStubPath('models/model.stub');
     }
 }

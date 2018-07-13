@@ -3,6 +3,7 @@
 namespace Nerbiz\Embark\Migrations;
 
 use Illuminate\Database\Migrations\MigrationCreator as BaseMigrationCreator;
+use Nerbiz\Embark\EmbarkServiceProvider;
 
 class MigrationCreator extends BaseMigrationCreator
 {
@@ -11,6 +12,6 @@ class MigrationCreator extends BaseMigrationCreator
      */
     public function stubPath()
     {
-        return dirname(__FILE__, 3) . '/stubs/migrations';
+        return EmbarkServiceProvider::getStubPath('resources/migrations');
     }
 }

@@ -11,6 +11,12 @@ use Nerbiz\Embark\Commands\ModelMakeCommand;
 class EmbarkServiceProvider extends ServiceProvider
 {
     /**
+     * The location of the stubs of this package
+     * @var null
+     */
+    protected static $stubsPath;
+
+    /**
      * Bootstrap services.
      *
      * @return void
@@ -31,6 +37,11 @@ class EmbarkServiceProvider extends ServiceProvider
             $resourcesDir . 'views/partials/head.blade.php' => resource_path('views/partials/head.blade.php'),
             $resourcesDir . 'views/pages/home.blade.php' => resource_path('views/pages/home.blade.php'),
         ], 'embark-views');
+
+        // Copy stub files to the resources directory
+        $this->publishes([
+            static::$stubsPath => resource_path('stubs'),
+        ], 'embark-stubs');
 
         // Load console routes
         $this->loadRoutesFrom(dirname(__FILE__, 2) . '/routes/console.php');
@@ -57,7 +68,29 @@ class EmbarkServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Set the stubs path
+        static::$stubsPath = dirname(__FILE__, 2) . '/stubs/';
+
         // Merge default config with custom config
         $this->mergeConfigFrom(dirname(__FILE__, 2) . '/config/embark.php', 'embark');
+    }
+
+    /**
+     * Get the path to a stub file, can use custom path from config
+     * @param string $path Path to a stub, relative from the stubs directory
+     * @return string
+     */
+    public static function getStubPath($path = '')
+    {
+        $customStubsPath = rtrim(config('embark.stubs_path'), '/') . '/';
+        $path = ltrim($path, '/');
+
+        // Use the custom path if it's readable
+        if ($customStubsPath !== null && is_readable($customStubsPath . $path)) {
+            return $customStubsPath . $path;
+        }
+
+        // Or use the default path
+        return static::$stubsPath . $path;
     }
 }
