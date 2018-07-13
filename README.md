@@ -16,11 +16,11 @@ The service provider will be autodiscovered, but for completeness, the service p
 Publish the config file:  
 ```php artisan vendor:publish --tag=embark-config```
 
-Publish some basic views:
+Publish some basic views:  
 ```php artisan vendor:publish --tag=embark-views```
 
-Publish stubs, in case you'd like to customize them:
-```php artisan vendor:publish --tag=embark-stubs```
+Publish stubs, in case you'd like to customize them:  
+```php artisan vendor:publish --tag=embark-stubs```  
 For convenience, the 'stubs_path' value in `config/embark.php` already points to where the stubs are published.
 
 ## Commands
