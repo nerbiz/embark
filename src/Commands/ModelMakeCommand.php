@@ -40,9 +40,9 @@ class ModelMakeCommand extends BaseModelMakeCommand
     protected function getStub()
     {
         if ($this->option('pivot')) {
-            return EmbarkServiceProvider::getStubPath('models/pivot.model.stub');
+            return EmbarkServiceProvider::getStubsPath('models/pivot.model.stub');
         }
 
-        return EmbarkServiceProvider::getStubPath('models/model.stub');
+        return EmbarkServiceProvider::getStubsPath('models/model.stub');
     }
 }

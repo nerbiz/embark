@@ -39,9 +39,9 @@ abstract class AbstractMessages
 
     /**
      * Ask for confirmation to continue
-     * @return boolean Whether the user confirmed or not
+     * @return bool Whether the user confirmed or not
      */
-    public function askConfirmation()
+    public function askConfirmation(): bool
     {
         $question = "Would you like to continue? (type 'yes' to confirm)";
         return ($this->command->ask($question) === 'yes');

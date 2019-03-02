@@ -34,9 +34,6 @@ class RestructureBase extends AbstractRestructure
      */
     protected $userExcludedFiles;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct()
     {
         $this->laravelDirname = rtrim(config('embark.laravel_directory_name'), '/');
@@ -58,7 +55,7 @@ class RestructureBase extends AbstractRestructure
      * Get the list of files/directories to exclude from the new Laravel directory
      * @return array
      */
-    public function getExcludedList()
+    public function getExcludedList(): array
     {
         return array_unique(array_merge([
             $this->laravelDirname,
@@ -73,7 +70,7 @@ class RestructureBase extends AbstractRestructure
     /**
      * {@inheritdoc}
      */
-    public function isDoneAlready()
+    public function isDoneAlready(): bool
     {
         // See if the default 'public' directory exists
         return (is_readable(base_path($this->laravelDirname)) || ! is_readable(base_path('public')));
@@ -82,7 +79,7 @@ class RestructureBase extends AbstractRestructure
     /**
      * {@inheritdoc}
      */
-    public function restructure()
+    public function restructure(): bool
     {
         // Add the custom Application class
         $this->createApplicationClass();

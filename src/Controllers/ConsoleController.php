@@ -27,9 +27,9 @@ class ConsoleController
 
     /**
      * Move Laravel and public files to separate directories
-     * @return boolean
+     * @return bool
      */
-    public function restructureBase()
+    public function restructureBase(): bool
     {
         $restructureBase = app()->make(RestructureBase::class);
         $restructureBaseMessages = app()->make(RestructureBaseMessages::class, [
@@ -69,9 +69,9 @@ class ConsoleController
 
     /**
      * Move the User model to the Models namespace
-     * @return boolean
+     * @return bool
      */
-    public function restructureModels()
+    public function restructureModels(): bool
     {
         $restructureModels = app()->make(RestructureModels::class);
         $restructureModelsMessages = app()->make(RestructureModelsMessages::class, [
@@ -111,9 +111,9 @@ class ConsoleController
 
     /**
      * Publish webpack.mix.js file, using custom public directory name
-     * @return boolean
+     * @return bool
      */
-    public function publishWebpack()
+    public function publishWebpack(): bool
     {
         $webpackMessages = app()->make(WebpackMessages::class, [
             'command' => $this->command
@@ -133,7 +133,7 @@ class ConsoleController
         $webpackStub = str_replace(
             'DummyPublicDirname',
             rtrim(config('embark.public_directory_name'), '/'),
-            file_get_contents(EmbarkServiceProvider::getStubPath('resources/webpack.mix.stub'))
+            file_get_contents(EmbarkServiceProvider::getStubsPath('resources/webpack.mix.stub'))
         );
 
         // Update the file

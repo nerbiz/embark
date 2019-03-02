@@ -25,7 +25,7 @@ class RestructureBaseMessages extends AbstractRestructureMessages
     protected $generatingNamespace;
 
     /**
-     * @param ClosureCommand $command
+     * {@inheritdoc}
      */
     public function __construct(ClosureCommand $command)
     {

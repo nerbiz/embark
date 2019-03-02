@@ -27,8 +27,9 @@ class MakeEmptyClassCommand extends GeneratorCommand
     /**
      * {@inheritdoc}
      */
-    protected function getStub() {
-        return EmbarkServiceProvider::getStubPath('empty-class.stub');
+    protected function getStub()
+    {
+        return EmbarkServiceProvider::getStubsPath('empty-class.stub');
     }
 
     /**

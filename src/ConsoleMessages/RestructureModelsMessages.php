@@ -13,7 +13,7 @@ class RestructureModelsMessages extends AbstractRestructureMessages
     protected $modelsNamespace;
 
     /**
-     * @param ClosureCommand $command
+     * {@inheritdoc}
      */
     public function __construct(ClosureCommand $command)
     {
