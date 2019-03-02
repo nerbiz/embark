@@ -9,12 +9,12 @@ use Nerbiz\Embark\EmbarkServiceProvider;
 class ModelMakeCommand extends BaseModelMakeCommand
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $name = 'embark:model';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function createMigration()
     {
@@ -27,7 +27,7 @@ class ModelMakeCommand extends BaseModelMakeCommand
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultNamespace($rootNamespace)
     {
@@ -35,7 +35,7 @@ class ModelMakeCommand extends BaseModelMakeCommand
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getStub()
     {

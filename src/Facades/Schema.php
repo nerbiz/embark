@@ -9,7 +9,7 @@ use Nerbiz\Embark\Schema\Blueprint;
 class Schema extends BaseSchema
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function connection($name)
     {
@@ -17,7 +17,7 @@ class Schema extends BaseSchema
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected static function getFacadeAccessor()
     {
