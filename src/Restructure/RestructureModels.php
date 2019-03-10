@@ -18,9 +18,6 @@ class RestructureModels extends AbstractRestructure
      */
     protected $modelsNamespacePath;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct()
     {
         $this->modelsNamespace = config('embark.models_namespace');
@@ -34,7 +31,7 @@ class RestructureModels extends AbstractRestructure
      * Get the list of files that will be edited
      * @return array
      */
-    public function getFileList()
+    public function getFileList(): array
     {
         return [
             app_path('User.php'),
@@ -48,7 +45,7 @@ class RestructureModels extends AbstractRestructure
     /**
      * {@inheritdoc}
      */
-    public function isDoneAlready()
+    public function isDoneAlready(): bool
     {
         return (is_readable(sprintf(
             '%s/User.php',
@@ -59,7 +56,7 @@ class RestructureModels extends AbstractRestructure
     /**
      * {@inheritdoc}
      */
-    public function restructure()
+    public function restructure(): bool
     {
         $userModelPath = app_path('User.php');
 

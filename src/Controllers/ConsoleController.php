@@ -3,6 +3,7 @@
 namespace Nerbiz\Embark\Controllers;
 
 use Illuminate\Foundation\Console\ClosureCommand;
+use Nerbiz\Embark\ConsoleMessages\ClearLogsMessages;
 use Nerbiz\Embark\EmbarkServiceProvider;
 use Nerbiz\Embark\ConsoleMessages\RestructureBaseMessages;
 use Nerbiz\Embark\ConsoleMessages\RestructureModelsMessages;
@@ -27,9 +28,9 @@ class ConsoleController
 
     /**
      * Move Laravel and public files to separate directories
-     * @return boolean
+     * @return bool
      */
-    public function restructureBase()
+    public function restructureBase(): bool
     {
         $restructureBase = app()->make(RestructureBase::class);
         $restructureBaseMessages = app()->make(RestructureBaseMessages::class, [
@@ -69,9 +70,9 @@ class ConsoleController
 
     /**
      * Move the User model to the Models namespace
-     * @return boolean
+     * @return bool
      */
-    public function restructureModels()
+    public function restructureModels(): bool
     {
         $restructureModels = app()->make(RestructureModels::class);
         $restructureModelsMessages = app()->make(RestructureModelsMessages::class, [
@@ -111,9 +112,9 @@ class ConsoleController
 
     /**
      * Publish webpack.mix.js file, using custom public directory name
-     * @return boolean
+     * @return bool
      */
-    public function publishWebpack()
+    public function publishWebpack(): bool
     {
         $webpackMessages = app()->make(WebpackMessages::class, [
             'command' => $this->command
@@ -133,13 +134,42 @@ class ConsoleController
         $webpackStub = str_replace(
             'DummyPublicDirname',
             rtrim(config('embark.public_directory_name'), '/'),
-            file_get_contents(EmbarkServiceProvider::getStubPath('resources/webpack.mix.stub'))
+            file_get_contents(EmbarkServiceProvider::getStubsPath('resources/webpack.mix.stub'))
         );
 
         // Update the file
         file_put_contents(base_path('webpack.mix.js'), $webpackStub);
 
         $webpackMessages->infoSucceeded();
+
+        return true;
+    }
+
+    /**
+     * Delete *.log files from the logs directory
+     * @return bool
+     */
+    public function clearLogs(): bool
+    {
+        $clearLogsMessages = app()->make(ClearLogsMessages::class, [
+            'command' => $this->command
+        ]);
+
+        $clearLogsMessages->infoDescribe();
+        $confirmed = $clearLogsMessages->askConfirmation();
+
+        // Show 'aborting' text when the user didn't confirm
+        if ($confirmed !== true) {
+            $clearLogsMessages->infoAborted();
+            return false;
+        }
+
+        // Delete the log files
+        foreach (glob(storage_path('logs/*.log')) as $logFile) {
+            unlink($logFile);
+        }
+
+        $clearLogsMessages->infoSucceeded();
 
         return true;
     }

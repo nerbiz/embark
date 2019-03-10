@@ -2,7 +2,6 @@
 
 namespace Nerbiz\Embark;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Nerbiz\Embark\Commands\MakeEmptyClassCommand;
 use Nerbiz\Embark\Commands\MigrateMakeCommand;
@@ -33,9 +32,7 @@ class EmbarkServiceProvider extends ServiceProvider
 
         // Copy basic views to the resources directory
         $this->publishes([
-            $resourcesDir . 'views/base.blade.php' => resource_path('views/base.blade.php'),
-            $resourcesDir . 'views/partials/head.blade.php' => resource_path('views/partials/head.blade.php'),
-            $resourcesDir . 'views/pages/home.blade.php' => resource_path('views/pages/home.blade.php'),
+            $resourcesDir . 'views/' => resource_path('views'),
         ], 'embark-views');
 
         // Copy stub files to the resources directory
@@ -53,11 +50,6 @@ class EmbarkServiceProvider extends ServiceProvider
                 MigrateMakeCommand::class,
                 ModelMakeCommand::class,
             ]);
-        }
-
-        // Apply the varchar length fix if needed
-        if (config('embark.string_length_fix') === true) {
-            Schema::defaultStringLength(191);
         }
     }
 
@@ -80,7 +72,7 @@ class EmbarkServiceProvider extends ServiceProvider
      * @param string $path Path to a stub, relative from the stubs directory
      * @return string
      */
-    public static function getStubPath($path = '')
+    public static function getStubsPath(string $path = ''): string
     {
         $customStubsPath = rtrim(config('embark.stubs_path'), '/') . '/';
         $path = ltrim($path, '/');

@@ -12,6 +12,6 @@ class MigrationCreator extends BaseMigrationCreator
      */
     public function stubPath()
     {
-        return EmbarkServiceProvider::getStubPath('resources/migrations');
+        return EmbarkServiceProvider::getStubsPath('resources/migrations');
     }
 }

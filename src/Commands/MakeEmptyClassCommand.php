@@ -10,29 +10,30 @@ use Nerbiz\Embark\EmbarkServiceProvider;
 class MakeEmptyClassCommand extends GeneratorCommand
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $name = 'embark:empty-class';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $description = 'Create an empty class with only a constructor';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $type = 'Empty class';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    protected function getStub() {
-        return EmbarkServiceProvider::getStubPath('empty-class.stub');
+    protected function getStub()
+    {
+        return EmbarkServiceProvider::getStubsPath('empty-class.stub');
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getDefaultNamespace($rootNamespace)
     {
@@ -40,7 +41,7 @@ class MakeEmptyClassCommand extends GeneratorCommand
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getArguments()
     {
@@ -50,7 +51,7 @@ class MakeEmptyClassCommand extends GeneratorCommand
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getOptions()
     {

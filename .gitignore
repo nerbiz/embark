@@ -4,7 +4,7 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
-# Mac OS X
+# OSX
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -12,3 +12,12 @@ Icon
 ._*
 .Spotlight-V100
 .Trashes
+
+# Composer
+vendor
+
+# PhpStorm
+.idea
+
+# General
+!.gitkeep

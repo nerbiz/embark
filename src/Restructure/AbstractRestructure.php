@@ -6,32 +6,33 @@ abstract class AbstractRestructure
 {
     /**
      * Whether or not the user confirmed to continue
-     * @var boolean
+     * @var bool
      */
     protected $confirmed;
 
     /**
      * Check if the restructuring is done already
-     * @return boolean
+     * @return bool
      */
-    abstract public function isDoneAlready();
+    abstract public function isDoneAlready(): bool;
 
     /**
      * Perform the restructuring operations
-     * @return boolean Indicates if the restructuring succeeded or not
+     * @return bool Indicates if the restructuring succeeded or not
      */
-    abstract public function restructure();
+    abstract public function restructure(): bool;
 
     /**
-     * @return boolean
+     * @return bool
      */
-    public function isConfirmed()
+    public function isConfirmed(): bool
     {
         return $this->confirmed;
     }
 
     /**
-     * @param boolean $confirmed
+     * @param bool $confirmed
+     * @return void
      */
     public function setConfirmed($confirmed)
     {

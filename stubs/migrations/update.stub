@@ -14,7 +14,7 @@ class DummyClass extends Migration
     public function up()
     {
         Schema::table('DummyTable', function (Blueprint $table) {
-            // $table->integer('user_id')->unsigned()->after('id');
+            // $table->unsignedInteger('user_id')->after('id');
 
             // $table->foreignKey('user_id');
         });
