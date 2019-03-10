@@ -1,5 +1,11 @@
 # Release notes
 
+## 0.15.0
+
+* Added the Transaction class for easy database transactions.
+* The varchar length fix is now done with an explicit (static) method, instead of automatically in the service provider.
+* Added the embark:clear-logs command, to delete *.log files in storage/logs.
+
 ## 0.14.0
 
 * Added custom model stubs.
