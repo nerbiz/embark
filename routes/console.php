@@ -19,3 +19,9 @@ Artisan::command('embark:webpack', function () {
     $consoleController = app()->make(ConsoleController::class, ['command' => $this]);
     $consoleController->publishWebpack();
 })->describe('Publish webpack.mix.js file, using custom public directory name');
+
+
+Artisan::command('embark:clear-logs', function () {
+    $consoleController = app()->make(ConsoleController::class, ['command' => $this]);
+    $consoleController->clearLogs();
+})->describe('Remove all *.log files from storage/logs');

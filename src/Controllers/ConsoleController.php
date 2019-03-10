@@ -3,6 +3,7 @@
 namespace Nerbiz\Embark\Controllers;
 
 use Illuminate\Foundation\Console\ClosureCommand;
+use Nerbiz\Embark\ConsoleMessages\ClearLogsMessages;
 use Nerbiz\Embark\EmbarkServiceProvider;
 use Nerbiz\Embark\ConsoleMessages\RestructureBaseMessages;
 use Nerbiz\Embark\ConsoleMessages\RestructureModelsMessages;
@@ -140,6 +141,35 @@ class ConsoleController
         file_put_contents(base_path('webpack.mix.js'), $webpackStub);
 
         $webpackMessages->infoSucceeded();
+
+        return true;
+    }
+
+    /**
+     * Delete *.log files from the logs directory
+     * @return bool
+     */
+    public function clearLogs(): bool
+    {
+        $clearLogsMessages = app()->make(ClearLogsMessages::class, [
+            'command' => $this->command
+        ]);
+
+        $clearLogsMessages->infoDescribe();
+        $confirmed = $clearLogsMessages->askConfirmation();
+
+        // Show 'aborting' text when the user didn't confirm
+        if ($confirmed !== true) {
+            $clearLogsMessages->infoAborted();
+            return false;
+        }
+
+        // Delete the log files
+        foreach (glob(storage_path('logs/*.log')) as $logFile) {
+            unlink($logFile);
+        }
+
+        $clearLogsMessages->infoSucceeded();
 
         return true;
     }
