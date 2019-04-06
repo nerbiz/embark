@@ -2,19 +2,19 @@
 
 namespace Nerbiz\Embark\ConsoleMessages;
 
-use Illuminate\Foundation\Console\ClosureCommand;
+use Illuminate\Console\Command;
 
 abstract class AbstractMessages
 {
     /**
-     * @var ClosureCommand
+     * @var Command
      */
     protected $command;
 
     /**
-     * @param ClosureCommand $command
+     * @param Command $command
      */
-    public function __construct(ClosureCommand $command)
+    public function __construct(Command $command)
     {
         $this->command = $command;
     }
@@ -48,7 +48,7 @@ abstract class AbstractMessages
     }
 
     /**
-     * Show some text that confirms aborting
+     * Inform that the command has succeeded
      * @return void
      */
     public function infoSucceeded()
@@ -57,7 +57,7 @@ abstract class AbstractMessages
     }
 
     /**
-     * Show some text that confirms aborting
+     * Inform that the command has been aborted
      * @return void
      */
     public function infoAborted()

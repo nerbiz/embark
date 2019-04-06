@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Nerbiz\Embark\Commands\MakeEmptyClassCommand;
 use Nerbiz\Embark\Commands\MigrateMakeCommand;
 use Nerbiz\Embark\Commands\ModelMakeCommand;
+use Nerbiz\Embark\Commands\RunScheduledTaskCommand;
 
 class EmbarkServiceProvider extends ServiceProvider
 {
@@ -49,6 +50,7 @@ class EmbarkServiceProvider extends ServiceProvider
                 MakeEmptyClassCommand::class,
                 MigrateMakeCommand::class,
                 ModelMakeCommand::class,
+                RunScheduledTaskCommand::class,
             ]);
         }
     }
