@@ -1,10 +1,15 @@
 # Release notes
 
+## 0.16.0
+
+* Added the 'embark:run-task' command, to immediately run a scheduled task.
+* Converted command routes to Command classes.
+
 ## 0.15.0
 
 * Added the Transaction class for easy database transactions.
 * The varchar length fix is now done with an explicit (static) method, instead of automatically in the service provider.
-* Added the embark:clear-logs command, to delete *.log files in storage/logs.
+* Added the 'embark:clear-logs' command, to delete *.log files in storage/logs.
 
 ## 0.14.0
 
@@ -17,7 +22,7 @@
 
 ## 0.12.0
 
-* Added the embark:model command, works just like make:model, but it uses the custom models namespace.
+* Added the 'embark:model' command, works just like 'make:model', but it uses the custom models namespace.
 * Added the CSRF token in a meta tag in head.blade.php (useful for JavaScript).
 
 ## 0.11.0
