@@ -31,43 +31,50 @@ class RunScheduledTaskCommand extends Command
      */
     public function handle()
     {
-        $runScheduledTaskMessages = app()->make(RunScheduledTaskMessages::class, [
-            'command' => $this
-        ]);
+        $runScheduledTaskMessages = app()->make(
+            RunScheduledTaskMessages::class,
+            ['command' => $this]
+        );
 
         // Get the scheduled tasks
         $events = app(Schedule::class)->events();
 
-        // Check the amount of tasks
-        if (count($events) > 26) {
-            $runScheduledTaskMessages->warnAmountTooHigh(26, count($events));
-            $runScheduledTaskMessages->infoAborted();
-            return false;
-        }
-
         $choices = [];
-        $tasks = [];
-        foreach ($events as $key => $event) {
+        $hasNoDescription = false;
+        foreach ($events as $event) {
             // Show a notice as description, if there is no description
             if (trim($event->description) === '') {
-                $description = 'No description (set it with ->description() on the task)';
+                $description = '(No description)';
+                $hasNoDescription = true;
             } else {
                 $description = $event->description;
             }
 
-            // Use letters as keys, so that the choice returns those
-            // Non-associative arrays return the value instead (in this case, the description)
-            $letter = chr(97 + $key);
-            $choices[$letter] = $description;
-            $tasks[$letter] = $event;
+            // Add the description to choose from
+            $choices[] = $description;
+        }
+
+        // Add a cancel option
+        $choices['c'] = 'Cancel';
+
+        // Warn when 1 or more tasks don't have a description
+        if ($hasNoDescription === true) {
+            $runScheduledTaskMessages->warnNoDescription();
         }
 
         // Ask which task needs to be run
         $chosen = $this->choice('Which scheduled task should be run?', $choices);
 
+        // The cancel option has been chosen
+        if ($chosen === 'c') {
+            $runScheduledTaskMessages->infoAborted();
+            return false;
+        }
+
         // Run the task
-        $runScheduledTaskMessages->infoTaskIsRunning();
-        $tasks[$chosen]->run($this->laravel);
+        $chosenTask = $events[$chosen];
+        $runScheduledTaskMessages->infoTaskIsRunning($chosenTask->description);
+        $chosenTask->run($this->laravel);
 
         $runScheduledTaskMessages->infoSucceeded();
     }
