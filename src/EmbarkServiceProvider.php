@@ -3,9 +3,13 @@
 namespace Nerbiz\Embark;
 
 use Illuminate\Support\ServiceProvider;
+use Nerbiz\Embark\Commands\ClearLogsCommand;
 use Nerbiz\Embark\Commands\MakeEmptyClassCommand;
 use Nerbiz\Embark\Commands\MigrateMakeCommand;
 use Nerbiz\Embark\Commands\ModelMakeCommand;
+use Nerbiz\Embark\Commands\PublishWebpackCommand;
+use Nerbiz\Embark\Commands\RestructureBaseCommand;
+use Nerbiz\Embark\Commands\RestructureModelsCommand;
 use Nerbiz\Embark\Commands\RunScheduledTaskCommand;
 
 class EmbarkServiceProvider extends ServiceProvider
@@ -41,15 +45,16 @@ class EmbarkServiceProvider extends ServiceProvider
             static::$stubsPath => resource_path('stubs'),
         ], 'embark-stubs');
 
-        // Load console routes
-        $this->loadRoutesFrom(dirname(__FILE__, 2) . '/routes/console.php');
-
         // Register the console commands
         if ($this->app->runningInConsole()) {
             $this->commands([
+                ClearLogsCommand::class,
                 MakeEmptyClassCommand::class,
                 MigrateMakeCommand::class,
                 ModelMakeCommand::class,
+                PublishWebpackCommand::class,
+                RestructureBaseCommand::class,
+                RestructureModelsCommand::class,
                 RunScheduledTaskCommand::class,
             ]);
         }

@@ -23,7 +23,7 @@ abstract class AbstractMessages
      * Warn about a potentially destructive operation
      * @return void
      */
-    public function warnDestructive()
+    public function warnDestructive(): void
     {
         $this->command->error('This is a potentially destructive operation');
     }
@@ -32,7 +32,7 @@ abstract class AbstractMessages
      * Warn that the operation should only be done in new projects
      * @return void
      */
-    public function warnOnlyOnNew()
+    public function warnOnlyOnNew(): void
     {
         $this->command->error('This should only be done in new Laravel projects');
     }
@@ -51,7 +51,7 @@ abstract class AbstractMessages
      * Inform that the command has succeeded
      * @return void
      */
-    public function infoSucceeded()
+    public function infoSucceeded(): void
     {
         $this->command->info('Finished');
     }
@@ -60,7 +60,7 @@ abstract class AbstractMessages
      * Inform that the command has been aborted
      * @return void
      */
-    public function infoAborted()
+    public function infoAborted(): void
     {
         $this->command->info('Aborted');
     }

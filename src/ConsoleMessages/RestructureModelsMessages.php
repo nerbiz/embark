@@ -2,7 +2,7 @@
 
 namespace Nerbiz\Embark\ConsoleMessages;
 
-use Illuminate\Foundation\Console\ClosureCommand;
+use Illuminate\Console\Command;
 
 class RestructureModelsMessages extends AbstractRestructureMessages
 {
@@ -15,7 +15,7 @@ class RestructureModelsMessages extends AbstractRestructureMessages
     /**
      * {@inheritdoc}
      */
-    public function __construct(ClosureCommand $command)
+    public function __construct(Command $command)
     {
         parent::__construct($command);
 
@@ -25,7 +25,7 @@ class RestructureModelsMessages extends AbstractRestructureMessages
     /**
      * {@inheritdoc}
      */
-    public function infoDoneAlready()
+    public function infoDoneAlready(): void
     {
         parent::infoDoneAlready();
 
@@ -40,7 +40,7 @@ class RestructureModelsMessages extends AbstractRestructureMessages
      * @param array $fileList The list of applicable files to describe
      * @return void
      */
-    public function infoConfirmation($fileList)
+    public function infoConfirmation($fileList): void
     {
         $this->warnDestructive();
         $this->command->info('These are the actions that will be performed:');
@@ -63,7 +63,7 @@ class RestructureModelsMessages extends AbstractRestructureMessages
      * Notify about creating new models
      * @return void
      */
-    public function commentModelCreation()
+    public function commentModelCreation(): void
     {
         $this->command->comment(sprintf(
             "The 'artisan embark:model YourModel' command uses the 'App\%s' namespace",

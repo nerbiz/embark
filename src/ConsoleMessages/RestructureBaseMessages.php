@@ -2,7 +2,7 @@
 
 namespace Nerbiz\Embark\ConsoleMessages;
 
-use Illuminate\Foundation\Console\ClosureCommand;
+use Illuminate\Console\Command;
 
 class RestructureBaseMessages extends AbstractRestructureMessages
 {
@@ -27,7 +27,7 @@ class RestructureBaseMessages extends AbstractRestructureMessages
     /**
      * {@inheritdoc}
      */
-    public function __construct(ClosureCommand $command)
+    public function __construct(Command $command)
     {
         parent::__construct($command);
 
@@ -39,13 +39,13 @@ class RestructureBaseMessages extends AbstractRestructureMessages
     /**
      * {@inheritdoc}
      */
-    public function infoDoneAlready()
+    public function infoDoneAlready(): void
     {
         parent::infoDoneAlready();
 
-        $this->command->comment("The 'public' directory doesn't exist in the base directory");
+        $this->command->comment("The 'public' directory doesn't exist in the base directory,");
         $this->command->comment(sprintf(
-            "And/or: The '%s' directory already exists",
+            "and/or the '%s' directory already exists",
             $this->laravelDirname
         ));
     }
@@ -55,7 +55,7 @@ class RestructureBaseMessages extends AbstractRestructureMessages
      * @param array $excludedList The list of excluded files to describe
      * @return void
      */
-    public function infoConfirmation($excludedList)
+    public function infoConfirmation($excludedList): void
     {
         $this->warnDestructive();
         $this->command->info('These are the actions that will be performed:');
@@ -91,7 +91,7 @@ class RestructureBaseMessages extends AbstractRestructureMessages
      * Notify about changing directory after moving
      * @return void
      */
-    public function commentChangeDir()
+    public function commentChangeDir(): void
     {
         $this->command->comment(sprintf(
             "You can now type 'cd %s'",
