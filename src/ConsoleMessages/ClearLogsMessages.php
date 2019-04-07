@@ -8,7 +8,7 @@ class ClearLogsMessages extends AbstractMessages
      * Describe what will happen
      * @return void
      */
-    public function infoDescribe()
+    public function infoDescribe(): void
     {
         $this->command->info(sprintf(
             'All *.log files in %s will be deleted',
