@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.16.1
+
+* Fixed: wrong stubs path for migrations.
+
 ## 0.16.0
 
 * Added the 'embark:run-task' command, to immediately run a scheduled task.
