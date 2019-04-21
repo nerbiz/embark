@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.16.2
+
+* Fixed: home stub wasn't extending the proper layout.
+
 ## 0.16.1
 
 * Fixed: wrong stubs path for migrations.
