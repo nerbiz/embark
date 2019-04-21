@@ -21,10 +21,10 @@ class DummyClass extends Model
      */
 
     /**
-     * Many-to-many relations
+     * Belongs-to relations
      */
 
     /**
-     * Belongs-to relations
+     * Belongs-to-many relations
      */
 }
