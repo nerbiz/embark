@@ -3,6 +3,7 @@
 namespace Nerbiz\Embark\Schema;
 
 use Illuminate\Database\Schema\Blueprint as BaseBlueprint;
+use Illuminate\Support\Str;
 
 class Blueprint extends BaseBlueprint
 {
@@ -24,7 +25,7 @@ class Blueprint extends BaseBlueprint
 
             // Derive the table name once (other columns reference the same table)
             if ($foreignTable === null) {
-                $foreignTable = str_plural($matches['table']);
+                $foreignTable = Str::plural($matches['table']);
             }
 
             $foreignColumns[] = $matches['column'];
