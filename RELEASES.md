@@ -1,11 +1,16 @@
 # Release notes
 
+## 0.16.3
+
+* Replaced the removed str_plural() with Str::plural().
+
 ## 0.16.2
 
 * Fixed: home stub wasn't extending the proper layout.
 
 ## 0.16.1
 
+* Added MySQL date/time formats to the database Helper.
 * Fixed: wrong stubs path for migrations.
 
 ## 0.16.0
